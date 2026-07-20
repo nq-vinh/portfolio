@@ -18,13 +18,15 @@ export const timeline = [
 	{
 		kind: 'experience',
 		company: "Web'n'sale",
-		role: 'Working Student, Frontend Development',
+		role: 'Senior Frontend Developer (Part-time)',
 		period: 'Jun 2025 - Present',
 		location: 'Germany',
 		highlights: [
-			'Migrating Douglas country-shop storefronts from Shopware 5 to Shopware 6 within a master/child theme architecture shared across shops.',
-			'Building storefront features in Twig, SCSS, and JavaScript; maintaining Playwright end-to-end suites and GitLab CI pipelines.',
-			'Supporting Symfony/PHP platform upgrades across the shop landscape.',
+			'Driving the Shopware 5 to 6 storefront migration for Douglas country shops (Portugal, Croatia, Slovenia): designed a reusable master theme with country-specific child themes and rebuilt product listing and detail pages in Twig, SCSS, and JavaScript to pixel parity with the legacy shops.',
+			'Rebuilt complex storefront features - faceted filtering, pagination, mega menu, CMS landing pages - as Shopware 6 storefront plugins, and configured production CMS layouts via the Shopware Admin and Store API.',
+			'Maintain live Shopware 5 shops end-to-end: responsive and mobile UI fixes across cart and checkout, media and catalog issues, and debugging of the Reskyt-based hybrid mobile app.',
+			'Modernized an agency plugin stack: upgraded Symfony 6.4 to 7.4 and PHP 8.4, ported it to Shopware 6.7, and introduced Playwright end-to-end tests.',
+			'Improved engineering hygiene across projects: JS/SCSS linting, GitLab CI pipeline fixes, ddev/Docker dev environments, and AI-assisted development workflows to accelerate migration work.',
 		],
 	},
 	{
@@ -36,7 +38,7 @@ export const timeline = [
 	{
 		kind: 'experience',
 		company: '.NFQ',
-		role: 'Frontend Engineer',
+		role: 'Frontend Developer',
 		period: 'Nov 2022 - Mar 2025',
 		location: 'Vietnam',
 		highlights: [
@@ -47,14 +49,16 @@ export const timeline = [
 	{
 		kind: 'experience',
 		company: 'ROSEN Group',
-		role: 'Frontend Engineer',
+		role: 'Frontend Developer',
 		period: 'Jul 2019 - Jun 2022',
 		location: 'Vietnam',
 		highlights: [
-			'Built Angular applications for pipeline-inspection sensor data used by inspection engineers.',
-			'Developed real-time IoT dashboards handling 1000+ concurrent WebSocket connections with RxJS.',
-			'Visualized sensor readings and ML model outputs with D3.js and Chart.js.',
-			'Implemented state management with NgRx and OAuth 2.0 authentication flows.',
+			'Developed Angular web applications in close collaboration with German and international ROSEN teams.',
+			'Created interactive dashboards for complex sensor data, implementing real-time IoT streaming and visualization with WebSockets and RxJS.',
+			'Built Asset Explorer, visualizing customer asset networks through multiple visualization methods, and PORTAL, an external-facing platform enabling third-party applications to integrate with the platform infrastructure.',
+			'Scaffolded a shared UI component library, standardizing look and feel across all applications on the platform.',
+			'Implemented NgRx state management for complex data flows from multiple sources, and participated in integrating OAuth 2.0 authentication.',
+			'Developed reusable Angular components for large datasets, optimized for mobile and desktop, and resolved performance issues in big-data, map, and chart features.',
 		],
 	},
 	{

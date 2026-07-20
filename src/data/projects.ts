@@ -12,6 +12,6 @@ export const projects: readonly Project[] = [
 		description:
 			'Zero-JavaScript by default Astro site: self-hosted Inter with a metric-matched fallback for zero layout shift, inlined critical CSS, WCAG AA+ in both themes, Lighthouse 100s. View source is the case study.',
 		tags: ['Astro', 'TypeScript', 'CSS'],
-		href: '#',
+		href: 'https://github.com/nq-vinh/portfolio',
 	},
 ];

@@ -40,7 +40,3 @@ The site is its own case study, so its hard guarantees are the product - do not 
   Layout is fluid from 320px to 4K via `clamp()`; no horizontal scroll at any viewport.
 - **Deploy target is Azure Static Web Apps**: `staticwebapp.config.json` at the repo root configures the 404 rewrite, security headers, and immutable caching for hashed assets under `/_astro/`.
   The `dist/` output is host-agnostic static files.
-
-## Known placeholders
-
-`site` in `astro.config.mjs`, the social link URLs in `src/data/profile.ts`, `sameAs` in the JSON-LD schema, and `og:image` are TODO placeholders awaiting real values.

@@ -17,7 +17,7 @@ export const profile = {
 	name: 'Vinh Nguyen',
 	shortName: 'Vinh',
 	role: 'Senior Frontend Engineer',
-	email: 'vinh1911.work@gmail.com',
+	email: 'contact@nqvinh.tech',
 	introduction:
 		"Six years of experience across Angular, Vue, and TypeScript. I've built real-time dashboards for industrial pipeline inspection, high-traffic e-commerce storefronts, and I care about the last 10%: performance budgets, accessibility. Currently pursuing an M.Sc. in Computer Science at TU Darmstadt.",
 	socialLinks: [

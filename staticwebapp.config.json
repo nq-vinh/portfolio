@@ -8,7 +8,9 @@
 	"globalHeaders": {
 		"Cache-Control": "public, max-age=0, must-revalidate",
 		"X-Content-Type-Options": "nosniff",
-		"Referrer-Policy": "strict-origin-when-cross-origin"
+		"Referrer-Policy": "strict-origin-when-cross-origin",
+		"Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+		"Content-Security-Policy": "default-src 'none'; script-src 'sha256-FzYV65K3v7bE7vrjFw+hgSsUVHwNk4F9UUy+L3bPVnQ=' 'sha256-l6TIiISDUQaHYtCj8kZwEAsrve068cnMyzNucFrQOt8='; style-src 'unsafe-inline'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
 	},
 	"routes": [
 		{

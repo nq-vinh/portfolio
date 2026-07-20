@@ -1,5 +1,6 @@
 ---
 import { Picture } from 'astro:assets';
+import Icon from '../components/Icon.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import Base from '../layouts/Base.astro';
 import portrait from '../assets/portrait.jpeg';
@@ -33,12 +34,19 @@ const description =
 				loading="eager"
 			/>
 			<ul class="hero-meta" aria-label="Contact details">
-				<li>{profile.location}</li>
-				<li><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
+				<li>
+					<a class="icon-link" href={`mailto:${profile.email}`}>
+						<span class="visually-hidden">Email {profile.email}</span>
+						<Icon name="mail" />
+					</a>
+				</li>
 				{
 					profile.socialLinks.map((link) => (
 						<li>
-							<a href={link.href}>{link.label}</a>
+							<a class="icon-link" href={link.href}>
+								<span class="visually-hidden">{link.label}</span>
+								<Icon name={link.icon} />
+							</a>
 						</li>
 					))
 				}
@@ -118,7 +126,10 @@ const description =
 				{
 					profile.socialLinks.map((link) => (
 						<li>
-							<a href={link.href}>{link.label}</a>
+							<a class="icon-link" href={link.href}>
+								<span class="visually-hidden">{link.label}</span>
+								<Icon name={link.icon} />
+							</a>
 						</li>
 					))
 				}

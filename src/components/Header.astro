@@ -1,0 +1,27 @@
+---
+import ThemeSwitch from './ThemeSwitch.astro';
+
+interface Props {
+	isHome: boolean;
+}
+
+const { isHome } = Astro.props;
+const anchorPrefix = isHome ? '' : '/';
+---
+
+<header class="site-header">
+	<div class="header-inner">
+		<a class="site-brand" href="/" aria-label="Vinh Nguyen - home">
+			<img src="/favicon.png" alt="" width="128" height="128" />
+		</a>
+		<nav class="main-nav" aria-label="Main">
+			<ul>
+				<li><a href={`${anchorPrefix}#experience`}>Experience</a></li>
+				<li><a href={`${anchorPrefix}#projects`}>Projects</a></li>
+				<li><a href={`${anchorPrefix}#skills`}>Skills</a></li>
+				<li><a href={`${anchorPrefix}#contact`}>Contact</a></li>
+			</ul>
+		</nav>
+		<ThemeSwitch />
+	</div>
+</header>

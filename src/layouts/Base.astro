@@ -1,0 +1,73 @@
+---
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { profile } from '../data/profile';
+import '../styles/global.css';
+
+interface Props {
+	title: string;
+	description: string;
+}
+
+const { title, description } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const isHome = Astro.url.pathname === '/';
+const personSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'Person',
+	name: profile.name,
+	jobTitle: profile.role,
+	address: {
+		'@type': 'PostalAddress',
+		addressLocality: 'Darmstadt',
+		addressCountry: 'DE',
+	},
+	email: `mailto:${profile.email}`,
+	// TODO: add sameAs with real GitHub and LinkedIn profile URLs
+};
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:locale" content="en_US" />
+		<!-- TODO: og:image -->
+		<!-- TODO: set site in astro.config and canonical here -->
+		<link rel="canonical" href={canonicalUrl} />
+		<link
+			rel="preload"
+			href="/fonts/inter-latin-variable.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin
+		/>
+		<link rel="icon" type="image/png" href="/favicon.png" sizes="128x128" />
+		<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+		<script is:inline>
+			(() => {
+				try {
+					const theme = localStorage.getItem('theme');
+					if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+				} catch {}
+			})();
+		</script>
+	</head>
+	<body>
+		<a class="skip-link" href="#main">Skip to main content</a>
+		<Header isHome={isHome} />
+		<main id="main">
+			<slot />
+		</main>
+		<Footer />
+	</body>
+</html>

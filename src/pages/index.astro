@@ -1,0 +1,137 @@
+---
+import { Picture } from 'astro:assets';
+import SectionHeader from '../components/SectionHeader.astro';
+import Base from '../layouts/Base.astro';
+import portrait from '../assets/portrait.jpeg';
+import { timeline } from '../data/experience';
+import { profile } from '../data/profile';
+import { projects } from '../data/projects';
+import { skillGroups } from '../data/skills';
+
+const title = 'Vinh Nguyen - Senior Frontend Engineer';
+const description =
+	'Senior frontend engineer in Darmstadt, Germany. Six years building Angular, Vue, and TypeScript applications - from real-time IoT dashboards to large-scale e-commerce storefronts.';
+---
+
+<Base title={title} description={description}>
+	<div class="content">
+		<div class="hero">
+			<div class="hero-copy">
+				<p class="eyebrow">Vinh Nguyen</p>
+				<h1>Frontend engineer</h1>
+				<p class="hero-introduction">{profile.introduction}</p>
+			</div>
+			<Picture
+				pictureAttributes={{ class: 'portrait' }}
+				src={portrait}
+				formats={['avif', 'webp']}
+				widths={[112, 224, 336]}
+				sizes="112px"
+				width="112"
+				height="112"
+				alt="Portrait of Vinh Nguyen"
+				loading="eager"
+			/>
+			<ul class="hero-meta" aria-label="Contact details">
+				<li>{profile.location}</li>
+				<li><a href={`mailto:${profile.email}`}>{profile.email}</a></li>
+				{
+					profile.socialLinks.map((link) => (
+						<li>
+							{/* TODO: real URL */}
+							<a href={link.href}>{link.label}</a>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+
+		<section id="experience" class="content-section" aria-labelledby="experience-title">
+			<SectionHeader headingId="experience-title" title="Experience" />
+			<div class="timeline">
+				{
+					timeline.map((entry) =>
+						entry.kind === 'experience' ? (
+							<article class="timeline-entry">
+								<h3>{entry.company}</h3>
+								<p class="timeline-role">{entry.role}</p>
+								<p class="timeline-meta">
+									{entry.period} · {entry.location}
+								</p>
+								<ul>
+									{entry.highlights.map((highlight) => <li>{highlight}</li>)}
+								</ul>
+							</article>
+						) : (
+							<article class="timeline-entry timeline-entry-education">
+								<p class="entry-label">Education</p>
+								<h3>{entry.degree}</h3>
+								<p class="timeline-role">{entry.institution}</p>
+								{'period' in entry && <p class="timeline-meta">{entry.period}</p>}
+							</article>
+						)
+					)
+				}
+			</div>
+		</section>
+
+		<section id="projects" class="content-section" aria-labelledby="projects-title">
+			<SectionHeader headingId="projects-title" title="Projects" />
+			<div class="project-list">
+				{
+					projects.map((project) => (
+						<article class="project">
+							{project.organization && <p class="entry-label">{project.organization}</p>}
+							<h3>
+								{project.href ? (
+									<>
+										{/* TODO: repo URL */}
+										<a href={project.href}>{project.title}</a>
+									</>
+								) : (
+									project.title
+								)}
+							</h3>
+							<p>{project.description}</p>
+							<ul class="tag-list" aria-label={`${project.title} technologies`}>
+								{project.tags.map((tag) => <li class="tag">{tag}</li>)}
+							</ul>
+						</article>
+					))
+				}
+			</div>
+		</section>
+
+		<section id="skills" class="content-section" aria-labelledby="skills-title">
+			<SectionHeader headingId="skills-title" title="Skills" />
+			<div class="skill-groups">
+				{
+					skillGroups.map((group) => (
+						<div class="skill-group">
+							<h3>{group.label}</h3>
+							<ul class="tag-list">
+								{group.skills.map((skill) => <li class="tag">{skill}</li>)}
+							</ul>
+						</div>
+					))
+				}
+			</div>
+		</section>
+
+		<section id="contact" class="content-section contact" aria-labelledby="contact-title">
+			<SectionHeader headingId="contact-title" title="Contact" />
+			<p>The fastest way to reach me is email. I'm open to senior frontend roles in the Rhein-Main area or remote.</p>
+			<a class="contact-email" href={`mailto:${profile.email}`}>{profile.email}</a>
+			<ul class="contact-links" aria-label="Social links">
+				{
+					profile.socialLinks.map((link) => (
+						<li>
+							{/* TODO: real URL */}
+							<a href={link.href}>{link.label}</a>
+						</li>
+					))
+				}
+			</ul>
+		</section>
+	</div>
+</Base>

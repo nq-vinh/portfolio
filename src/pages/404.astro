@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+
+const title = '404 - Page not found | Vinh Nguyen';
+const description = 'The page you requested could not be found.';
+---
+
+<Base title={title} description={description}>
+	<div class="content not-found">
+		<p class="eyebrow">Error 404</p>
+		<h1>404 - Page not found</h1>
+		<p>The page you were looking for does not exist or may have moved.</p>
+		<a href="/">Back to home</a>
+	</div>
+</Base>

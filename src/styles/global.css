@@ -268,6 +268,25 @@ ul {
 	text-transform: uppercase;
 }
 
+.hero-copy h1 {
+	max-width: none;
+	margin-block-end: clamp(0.5rem, 1.5vw, 0.75rem);
+	font-weight: 400;
+}
+
+.hero-copy h1 strong {
+	font-weight: 800;
+}
+
+.hero-role {
+	margin-block-end: clamp(1.25rem, 3vw, 2rem);
+	color: var(--color-accent);
+	font-size: clamp(1.25rem, 3.5vw, 1.75rem);
+	font-weight: 700;
+	letter-spacing: -0.025em;
+	line-height: 1.15;
+}
+
 .hero-introduction {
 	max-width: 66ch;
 	color: var(--color-muted);
@@ -461,7 +480,6 @@ ul {
 
 	.portrait {
 		order: 0;
-		margin-block-start: 2rem;
 	}
 
 	.content-section {
@@ -500,7 +518,8 @@ ul {
 
 	a,
 	.eyebrow,
-	.entry-label {
+	.entry-label,
+	.hero-role {
 		color: LinkText;
 	}
 

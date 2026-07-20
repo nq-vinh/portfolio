@@ -17,8 +17,8 @@ const description =
 	<div class="content">
 		<div class="hero">
 			<div class="hero-copy">
-				<p class="eyebrow">Vinh Nguyen</p>
-				<h1>Frontend engineer</h1>
+				<h1>Hi, I'm <strong>{profile.shortName}</strong></h1>
+				<p class="hero-role">{profile.role}</p>
 				<p class="hero-introduction">{profile.introduction}</p>
 			</div>
 			<Picture
@@ -38,7 +38,6 @@ const description =
 				{
 					profile.socialLinks.map((link) => (
 						<li>
-							{/* TODO: real URL */}
 							<a href={link.href}>{link.label}</a>
 						</li>
 					))
@@ -83,14 +82,7 @@ const description =
 						<article class="project">
 							{project.organization && <p class="entry-label">{project.organization}</p>}
 							<h3>
-								{project.href ? (
-									<>
-										{/* TODO: repo URL */}
-										<a href={project.href}>{project.title}</a>
-									</>
-								) : (
-									project.title
-								)}
+								{project.href ? <a href={project.href}>{project.title}</a> : project.title}
 							</h3>
 							<p>{project.description}</p>
 							<ul class="tag-list" aria-label={`${project.title} technologies`}>
@@ -126,7 +118,6 @@ const description =
 				{
 					profile.socialLinks.map((link) => (
 						<li>
-							{/* TODO: real URL */}
 							<a href={link.href}>{link.label}</a>
 						</li>
 					))

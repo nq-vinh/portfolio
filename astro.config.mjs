@@ -2,7 +2,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-	site: 'https://example.com', // TODO: real domain
+	site: 'https://nqvinh.tech',
 	build: {
 		inlineStylesheets: 'always',
 	},

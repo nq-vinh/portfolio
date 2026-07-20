@@ -20,7 +20,7 @@ export const profile = {
 	introduction:
 		"Hi I'm Vinh - a senior frontend engineer with six years of experience across Angular, Vue, and TypeScript. I've built real-time dashboards for industrial pipeline inspection and high-traffic e-commerce storefronts, and I care about the last 10%: performance budgets, accessibility, and pixel-level polish. Currently pursuing an M.Sc. in Computer Science at TU Darmstadt.",
 	socialLinks: [
-		{ label: 'GitHub', href: '#' },
-		{ label: 'LinkedIn', href: '#' },
+		{ label: 'GitHub', href: 'https://github.com/nq-vinh' },
+		{ label: 'LinkedIn', href: 'https://www.linkedin.com/in/vinh1911/' },
 	],
 } as const satisfies Profile;

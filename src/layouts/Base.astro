@@ -11,6 +11,7 @@ interface Props {
 
 const { title, description } = Astro.props;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const ogImageUrl = new URL('/og.png', Astro.site);
 const isHome = Astro.url.pathname === '/';
 const personSchema = {
 	'@context': 'https://schema.org',
@@ -23,7 +24,7 @@ const personSchema = {
 		addressCountry: 'DE',
 	},
 	email: `mailto:${profile.email}`,
-	// TODO: add sameAs with real GitHub and LinkedIn profile URLs
+	sameAs: profile.socialLinks.map((link) => link.href),
 };
 ---
 
@@ -39,8 +40,12 @@ const personSchema = {
 		<meta property="og:description" content={description} />
 		<meta property="og:type" content="website" />
 		<meta property="og:locale" content="en_US" />
-		<!-- TODO: og:image -->
-		<!-- TODO: set site in astro.config and canonical here -->
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:image" content={ogImageUrl} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content={`${profile.name} - ${profile.role} - nqvinh.tech`} />
+		<meta name="twitter:card" content="summary_large_image" />
 		<link rel="canonical" href={canonicalUrl} />
 		<link
 			rel="preload"

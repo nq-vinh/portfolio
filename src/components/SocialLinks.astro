@@ -1,0 +1,15 @@
+---
+import { profile } from '../data/profile';
+import Icon from './Icon.astro';
+---
+
+{
+	profile.socialLinks.map((link) => (
+		<li>
+			<a class="icon-link" href={link.href}>
+				<span class="visually-hidden">{link.label}</span>
+				<Icon name={link.icon} />
+			</a>
+		</li>
+	))
+}

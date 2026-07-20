@@ -1,12 +1,11 @@
 export interface Project {
 	title: string;
-	organization?: string;
 	description: string;
 	tags: readonly string[];
 	href?: string;
 }
 
-export const projects: readonly Project[] = [
+export const projects = [
 	{
 		title: 'This website',
 		description:
@@ -14,4 +13,4 @@ export const projects: readonly Project[] = [
 		tags: ['Astro', 'TypeScript', 'CSS'],
 		href: 'https://github.com/nq-vinh/portfolio',
 	},
-];
+] as const satisfies readonly Project[];

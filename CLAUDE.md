@@ -42,4 +42,5 @@ The site is its own case study, so its hard guarantees are the product - do not 
   The `dist/` output is host-agnostic static files.
 - **The CSP in `staticwebapp.config.json` pins the two inline scripts by sha256 hash.**
   If either script in `Base.astro` or `ThemeSwitch.astro` changes, recompute the hashes from the built `dist/index.html` (sha256 of the exact inline text, base64) and update the `script-src` directive, or the theme scripts will be blocked in production.
+  `npm run build` runs `scripts/verify-csp.mjs` after the Astro build; it fails the build and prints the correct hashes whenever the built inline scripts and the `script-src` directive drift apart.
   HSTS is set to one year with `preload` and the domain is submitted to the browser preload lists - never weaken or remove this header.

@@ -25,6 +25,7 @@
 	--color-accent: light-dark(#496d10, #84cc16);
 	--color-accent-surface: light-dark(#eef7dc, #1f2e08);
 	--color-border: light-dark(#80807c, #7e7e86);
+	--measure: 66ch;
 	font-family: 'Inter', 'Inter Fallback', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
 }
 
@@ -50,7 +51,6 @@ html {
 body {
 	min-width: 20rem;
 	margin: 0;
-	background: var(--color-bg);
 	color: var(--color-text);
 	font-size: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
 	line-height: 1.65;
@@ -92,7 +92,6 @@ h3 {
 }
 
 h1 {
-	max-width: 15ch;
 	margin-block-end: clamp(1.25rem, 3vw, 2rem);
 	font-size: clamp(2rem, 6vw, 3.5rem);
 	font-weight: 700;
@@ -269,7 +268,6 @@ ul {
 }
 
 .hero-copy h1 {
-	max-width: none;
 	margin-block-end: clamp(0.5rem, 1.5vw, 0.75rem);
 	font-weight: 400;
 }
@@ -288,7 +286,7 @@ ul {
 }
 
 .hero-introduction {
-	max-width: 66ch;
+	max-width: var(--measure);
 	margin-bottom: 0;
 	color: var(--color-muted);
 }
@@ -339,8 +337,8 @@ ul {
 	color: var(--color-accent);
 }
 
-.timeline { 
-	margin-left: 20px;
+.timeline {
+	margin-left: 1.25rem;
 	border-left: 1px solid var(--color-border);
 }
 
@@ -378,7 +376,7 @@ ul {
 }
 
 .timeline-entry ul {
-	max-width: 66ch;
+	max-width: var(--measure);
 	margin-block: 0;
 	color: var(--color-muted);
 }
@@ -404,13 +402,9 @@ ul {
 	padding-block-end: 0;
 }
 
-.project > p:not(.entry-label) {
-	max-width: 66ch;
+.project > p {
+	max-width: var(--measure);
 	color: var(--color-muted);
-}
-
-.project .entry-label {
-	margin-block-end: 0.45rem;
 }
 
 .tag-list {
@@ -435,8 +429,8 @@ ul {
 	margin-block-end: 0.9rem;
 }
 
-.contact > p:not(.eyebrow) {
-	max-width: 66ch;
+.contact > p {
+	max-width: var(--measure);
 	color: var(--color-muted);
 }
 
@@ -470,12 +464,8 @@ ul {
 	padding-block: clamp(5rem, 16vw, 10rem);
 }
 
-.not-found h1 {
-	max-width: none;
-}
-
 .not-found p:not(.eyebrow) {
-	max-width: 66ch;
+	max-width: var(--measure);
 }
 
 @media (min-width: 48rem) {
@@ -596,8 +586,8 @@ ul {
 	.hero-meta,
 	.timeline-meta,
 	.timeline-entry ul,
-	.project > p:not(.entry-label),
-	.contact > p:not(.eyebrow),
+	.project > p,
+	.contact > p,
 	.footer-inner {
 		color: #000;
 	}

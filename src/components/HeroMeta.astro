@@ -1,0 +1,15 @@
+---
+import Icon from './Icon.astro';
+import SocialLinks from './SocialLinks.astro';
+import { profile } from '../data/profile';
+---
+
+<ul class="hero-meta" aria-label="Contact details">
+	<li>
+		<a class="icon-link" href={`mailto:${profile.email}`}>
+			<span class="visually-hidden">Email {profile.email}</span>
+			<Icon name="mail" />
+		</a>
+	</li>
+	<SocialLinks />
+</ul>

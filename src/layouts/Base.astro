@@ -2,22 +2,26 @@
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import favicon from '../assets/favicon.png';
-import { profile } from '../data/profile';
+import { personId, profile } from '../data/profile';
 import '../styles/global.css';
 
 interface Props {
 	title: string;
 	description: string;
+	ogType?: 'website' | 'article' | 'profile';
+	jsonLd?: object;
 }
 
-const { title, description } = Astro.props;
+const { title, description, ogType = 'website', jsonLd } = Astro.props;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
 const ogImageUrl = new URL('/og.png', Astro.site);
 const personSchema = {
 	'@context': 'https://schema.org',
 	'@type': 'Person',
+	'@id': personId,
 	name: profile.name,
 	jobTitle: profile.role,
+	url: new URL('/', Astro.site).href,
 	address: {
 		'@type': 'PostalAddress',
 		addressLocality: profile.location.city,
@@ -38,7 +42,7 @@ const personSchema = {
 		<meta name="description" content={description} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
-		<meta property="og:type" content="website" />
+		<meta property="og:type" content={ogType} />
 		<meta property="og:locale" content="en_US" />
 		<meta property="og:url" content={canonicalUrl} />
 		<meta property="og:image" content={ogImageUrl} />
@@ -58,6 +62,8 @@ const personSchema = {
 		<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+		{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+		<script type="speculationrules" is:inline>{"prefetch":[{"source":"document","where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
 		<script is:inline>
 			(() => {
 				try {

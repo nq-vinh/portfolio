@@ -2,12 +2,25 @@
 import { profile } from '../data/profile';
 
 const year = new Date().getFullYear();
+const githubLink = profile.socialLinks.find((link) => link.icon === 'github');
 ---
 
 <footer class="site-footer">
 	<div class="footer-inner">
-		<p>
-			© {year} {profile.name}. All rights reserved.
-		</p>
+		<div class="footer-line">
+			<span>© {year} {profile.name}</span>
+			<span aria-hidden="true">·</span>
+			<nav aria-label="Footer">
+				<a href="/resume/">Resume</a>
+				{githubLink && (
+					<>
+						<span aria-hidden="true">·</span>
+						<a href={githubLink.href}>{githubLink.label}</a>
+					</>
+				)}
+				<span aria-hidden="true">·</span>
+				<a href={`mailto:${profile.email}`}>{profile.email}</a>
+			</nav>
+		</div>
 	</div>
 </footer>

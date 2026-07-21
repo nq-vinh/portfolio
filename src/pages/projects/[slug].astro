@@ -1,0 +1,100 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import TagList from '../../components/TagList.astro';
+import Base from '../../layouts/Base.astro';
+import { personId, profile } from '../../data/profile';
+import { getPublishedProjects } from '../../lib/projects';
+
+export async function getStaticPaths() {
+	const entries = await getPublishedProjects();
+
+	return entries.map((entry, index) => ({
+		params: { slug: entry.id },
+		props: {
+			entry,
+			previous: entries[index - 1],
+			next: entries[index + 1],
+		},
+	}));
+}
+
+interface Props {
+	entry: CollectionEntry<'projects'>;
+	previous?: CollectionEntry<'projects'>;
+	next?: CollectionEntry<'projects'>;
+}
+
+const { entry, previous, next } = Astro.props;
+const { Content, headings } = await render(entry);
+const headingIds = new Set(headings.map((heading) => heading.slug));
+const missingHookIds = entry.data.hooks.map((hook) => hook.id).filter((id) => !headingIds.has(id));
+
+if (missingHookIds.length > 0) {
+	throw new Error(`Missing case-study headings for ${entry.id}: ${missingHookIds.join(', ')}`);
+}
+
+const staleMisconceptions = entry.data.hooks
+	.filter((hook) => !entry.body?.includes(hook.misconception))
+	.map((hook) => hook.id);
+
+if (staleMisconceptions.length > 0) {
+	throw new Error(`Case-study body of ${entry.id} drifted from hook misconceptions: ${staleMisconceptions.join(', ')}`);
+}
+
+const title = `${entry.data.metaTitle ?? entry.data.title} · ${profile.name}`;
+const articleSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'TechArticle',
+	headline: entry.data.title,
+	datePublished: entry.data.date.toISOString(),
+	author: {
+		'@id': personId,
+	},
+	about: {
+		'@type': 'SoftwareSourceCode',
+		codeRepository: entry.data.repo,
+	},
+};
+---
+
+<Base
+	title={title}
+	description={entry.data.summary}
+	ogType="article"
+	jsonLd={articleSchema}
+>
+	<div class="content case-study-page">
+		<a href="/">← Home</a>
+		<header class="case-study-header">
+			<p class="eyebrow">Case study</p>
+			<h1 style={`view-transition-name: project-${entry.id}`}>{entry.data.title}</h1>
+			<p class="case-study-summary">{entry.data.summary}</p>
+			<TagList items={entry.data.tags} label={`${entry.data.title} technologies`} />
+			{entry.data.repo && <a class="case-study-source" href={entry.data.repo}>View source on GitHub</a>}
+		</header>
+
+		<ul class="stat-list" aria-label="Key numbers">
+			{entry.data.stats.map((stat) => (
+				<li>
+					<strong>{stat.value}</strong>
+					<span>{stat.label}</span>
+				</li>
+			))}
+		</ul>
+
+		<article class="case-study">
+			<Content />
+		</article>
+
+		<footer class="case-study-footer">
+			{entry.data.repo && <a href={entry.data.repo}>View source on GitHub →</a>}
+			{(previous || next) && (
+				<nav aria-label="More projects">
+					{previous && <a href={`/projects/${previous.id}/`}>← {previous.data.title}</a>}
+					{next && <a href={`/projects/${next.id}/`}>{next.data.title} →</a>}
+				</nav>
+			)}
+			<a href="/projects/">← Back to all projects</a>
+		</footer>
+	</div>
+</Base>

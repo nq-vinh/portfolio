@@ -1,15 +1,17 @@
 # Vinh's Portfolio
 
 Personal portfolio, live at [nqvinh.tech](https://nqvinh.tech).
-A static site built with [Astro](https://astro.build), TypeScript, and plain CSS: one page plus a custom 404.
+A static site built with [Astro](https://astro.build), TypeScript, and plain CSS: a project-led landing page, per-project case studies under `/projects/`, a `/resume` page, and a custom 404.
 
-All content lives in typed data files under `src/data/` (`profile`, `experience`, `projects`, `skills`).
+Profile, experience, and skills live in typed data files under `src/data/`; projects live in an Astro content collection (`src/content/projects/`, schema in `src/content.config.ts`) whose frontmatter also drives the homepage showcase, anchors, and sitemap.
 Editing the site means editing those files, not the markup.
 
 ## Guarantees
 
 - **Zero client-side JavaScript by default.**
-  The only scripts are two small inline ones: a pre-paint boot in the document head that applies the stored theme before first render (so there is no theme flash), and the theme toggle logic itself.
+  The only executable scripts are two small inline ones: a pre-paint boot in the document head that applies the stored theme before first render (so there is no theme flash), and the theme toggle logic itself.
+  A third inline block is declarative Speculation Rules JSON (never executed) that prefetches same-origin pages on hover.
+- **Seamless navigation without JavaScript:** cross-document View Transitions via the CSS `@view-transition` rule (the featured project title morphs into the case-study heading), disabled under `prefers-reduced-motion`; browsers without support get plain navigation.
 - **No render-blocking requests beyond the document.**
   All CSS is inlined at build time (`build.inlineStylesheets: 'always'`), the HTML is minified (`compressHTML`), the one webfont (Inter) is self-hosted, subset, and preloaded, and there are no third-party resources.
 - **Performance:** Lighthouse 100/100/100/100, LCP around 1.1s on throttled 4G, zero cumulative layout shift.
@@ -19,7 +21,7 @@ Editing the site means editing those files, not the markup.
 - **Theming:** automatic light/dark via `prefers-color-scheme` plus an accessible toggle button (`aria-pressed`).
   A choice that differs from the OS preference is persisted in `localStorage`; toggling back to match the OS clears the override so the site follows the system again.
   The active theme is reflected through the `color-scheme` property.
-- **SEO:** canonical URL, Open Graph and Twitter card tags with a 1200x630 `og:image`, and a JSON-LD `Person` schema with `sameAs` profile links in the document head.
+- **SEO:** canonical URLs, Open Graph and Twitter card tags with a 1200x630 `og:image`, a hand-rolled `sitemap.xml`, and JSON-LD on every page (`Person` site-wide, `ProfilePage` on the resume, `TechArticle` on case studies).
 - **Media preferences honored:** `forced-colors` (Windows High Contrast), `prefers-contrast: more`, and `prefers-reduced-motion` are all handled; there is also a print stylesheet.
 - **Responsive from 320px to 4K** with fluid type and spacing via `clamp()`, no horizontal scroll at any viewport.
 

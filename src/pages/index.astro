@@ -1,16 +1,20 @@
 ---
 import { Picture } from 'astro:assets';
-import Icon from '../components/Icon.astro';
+import HeroMeta from '../components/HeroMeta.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import SocialLinks from '../components/SocialLinks.astro';
 import TagList from '../components/TagList.astro';
 import Base from '../layouts/Base.astro';
 import portrait from '../assets/portrait.jpeg';
-import { timeline } from '../data/experience';
 import { profile } from '../data/profile';
-import { projects } from '../data/projects';
-import { skillGroups } from '../data/skills';
+import { getPublishedProjects } from '../lib/projects';
 
+const projects = await getPublishedProjects();
+const featuredProject = projects.find(({ data }) => data.featured);
+
+if (!featuredProject) throw new Error('The homepage requires a featured project.');
+
+const otherProjects = projects.filter(({ data }) => !data.featured);
 const title = `${profile.name} - ${profile.role}`;
 ---
 
@@ -20,7 +24,7 @@ const title = `${profile.name} - ${profile.role}`;
 			<div class="hero-copy">
 				<h1>Hi, I'm <strong>{profile.shortName}</strong></h1>
 				<p class="hero-role">{profile.role}</p>
-				<p class="hero-introduction">{profile.introduction}</p>
+				<p class="hero-introduction">{profile.tagline}</p>
 			</div>
 			<Picture
 				pictureAttributes={{ class: 'portrait' }}
@@ -33,75 +37,56 @@ const title = `${profile.name} - ${profile.role}`;
 				alt={`Portrait of ${profile.name}`}
 				loading="eager"
 			/>
-			<ul class="hero-meta" aria-label="Contact details">
-				<li>
-					<a class="icon-link" href={`mailto:${profile.email}`}>
-						<span class="visually-hidden">Email {profile.email}</span>
-						<Icon name="mail" />
-					</a>
-				</li>
-				<SocialLinks />
-			</ul>
+			<HeroMeta />
 		</div>
 
-		<section id="experience" class="content-section" aria-labelledby="experience-title">
-			<SectionHeader headingId="experience-title" title="Experience" />
-			<div class="timeline">
-				{
-					timeline.map((entry) =>
-						entry.kind === 'experience' ? (
-							<article class="timeline-entry">
-								<h3>{entry.company}</h3>
-								<p class="timeline-role">{entry.role}</p>
-								<p class="timeline-meta">
-									{entry.period} · {entry.location}
-								</p>
-								<ul>
-									{entry.highlights.map((highlight) => <li>{highlight}</li>)}
-								</ul>
-							</article>
-						) : (
-							<article class="timeline-entry timeline-entry-education">
-								<p class="entry-label">Education</p>
-								<h3>{entry.degree}</h3>
-								<p class="timeline-role">{entry.institution}</p>
-								{'period' in entry && <p class="timeline-meta">{entry.period}</p>}
-							</article>
-						)
-					)
-				}
+		<section id="projects" class="content-section" aria-labelledby="featured-project-title">
+			<p class="eyebrow">Featured case study</p>
+			<h2 id="featured-project-title" style={`view-transition-name: project-${featuredProject.id}`}>{featuredProject.data.title}</h2>
+			<p class="project-summary">{featuredProject.data.summary}</p>
+			<div class="project-card">
+				<ul class="hook-list">
+					{featuredProject.data.hooks.map((hook) => (
+						<li class="hook">
+							<p class="hook-misconception">"{hook.misconception}"</p>
+							<h3 class="hook-question">{hook.question}</h3>
+							<p class="hook-answer">
+								<strong>{hook.metric}.</strong> {hook.detail}
+								<a href={`/projects/${featuredProject.id}/#${hook.id}`}>
+									How<span class="visually-hidden"> - {hook.question}</span> →
+								</a>
+							</p>
+						</li>
+					))}
+				</ul>
+				<TagList items={featuredProject.data.tags} label={`${featuredProject.data.title} technologies`} />
+				<div class="project-actions">
+					<a href={`/projects/${featuredProject.id}/`}>Read the case study →</a>
+					{featuredProject.data.repo && <a href={featuredProject.data.repo}>View source</a>}
+				</div>
 			</div>
-		</section>
-
-		<section id="projects" class="content-section" aria-labelledby="projects-title">
-			<SectionHeader headingId="projects-title" title="Projects" />
-			<div class="project-list">
-				{
-					projects.map((project) => (
+			{otherProjects.length > 0 && (
+				<div class="project-list project-list-secondary">
+					<h3>More projects</h3>
+					{otherProjects.map((project) => (
 						<article class="project">
 							<h3>
-								{project.href ? <a href={project.href}>{project.title}</a> : project.title}
+								<a href={`/projects/${project.id}/`}>{project.data.title}</a>
 							</h3>
-							<p>{project.description}</p>
-							<TagList items={project.tags} label={`${project.title} technologies`} />
+							<p>{project.data.summary}</p>
+							<TagList items={project.data.tags} label={`${project.data.title} technologies`} />
 						</article>
-					))
-				}
-			</div>
+					))}
+				</div>
+			)}
 		</section>
 
-		<section id="skills" class="content-section" aria-labelledby="skills-title">
-			<SectionHeader headingId="skills-title" title="Skills" />
-			<div class="skill-groups">
-				{
-					skillGroups.map((group) => (
-						<div class="skill-group">
-							<h3>{group.label}</h3>
-							<TagList items={group.skills} />
-						</div>
-					))
-				}
-			</div>
+		<section id="now" class="content-section" aria-labelledby="now-title">
+			<SectionHeader headingId="now-title" title="Now" />
+			<ul class="now-list">
+				{profile.now.map((item) => <li>{item}</li>)}
+			</ul>
+			<a href="/resume/">Full resume →</a>
 		</section>
 
 		<section id="contact" class="content-section contact" aria-labelledby="contact-title">

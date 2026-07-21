@@ -1,0 +1,78 @@
+---
+import HeroMeta from '../components/HeroMeta.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import TagList from '../components/TagList.astro';
+import Base from '../layouts/Base.astro';
+import { timeline } from '../data/experience';
+import { personId, profile } from '../data/profile';
+import { skillGroups } from '../data/skills';
+
+const title = `Resume · ${profile.name} - ${profile.role}`;
+const profilePageSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'ProfilePage',
+	mainEntity: {
+		'@id': personId,
+	},
+};
+---
+
+<Base title={title} description={profile.metaDescription} ogType="profile" jsonLd={profilePageSchema}>
+	<div class="content">
+		<header class="resume-intro">
+			<p class="eyebrow">Resume</p>
+			<h1>{profile.name}</h1>
+			<p class="hero-role">{profile.role} · {profile.location.city}, Germany</p>
+			<p class="hero-introduction">{profile.introduction}</p>
+			<HeroMeta />
+		</header>
+
+		<section id="experience" class="content-section" aria-labelledby="experience-title">
+			<SectionHeader headingId="experience-title" title="Experience" />
+			<div class="timeline">
+				{
+					timeline.map((entry) =>
+						entry.kind === 'experience' ? (
+							<article class="timeline-entry">
+								<h3>{entry.company}</h3>
+								<p class="timeline-role">{entry.role}</p>
+								<p class="timeline-meta">
+									{entry.period} · {entry.location}
+								</p>
+								<ul>
+									{entry.highlights.map((highlight) => <li>{highlight}</li>)}
+								</ul>
+							</article>
+						) : (
+							<article class="timeline-entry timeline-entry-education">
+								<p class="entry-label">Education</p>
+								<h3>{entry.degree}</h3>
+								<p class="timeline-role">{entry.institution}</p>
+								{'period' in entry && <p class="timeline-meta">{entry.period}</p>}
+							</article>
+						)
+					)
+				}
+			</div>
+		</section>
+
+		<section id="skills" class="content-section" aria-labelledby="skills-title">
+			<SectionHeader headingId="skills-title" title="Skills" />
+			<div class="skill-groups">
+				{
+					skillGroups.map((group) => (
+						<div class="skill-group">
+							<h3>{group.label}</h3>
+							<TagList items={group.skills} />
+						</div>
+					))
+				}
+			</div>
+		</section>
+
+		<section class="resume-closing" aria-label="Contact">
+			<p>The fastest way to reach me is email: <a class="contact-email" href={`mailto:${profile.email}`}>{profile.email}</a></p>
+			<p class="resume-print-note">This page prints cleanly - save it as a PDF for the classic format.</p>
+		</section>
+	</div>
+</Base>

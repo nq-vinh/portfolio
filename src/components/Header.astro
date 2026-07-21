@@ -3,6 +3,10 @@ import { Image } from 'astro:assets';
 import favicon from '../assets/favicon.png';
 import { profile } from '../data/profile';
 import ThemeSwitch from './ThemeSwitch.astro';
+
+const pathname = Astro.url.pathname;
+const projectsActive = pathname.startsWith('/projects/');
+const resumeActive = pathname === '/resume/';
 ---
 
 <header class="site-header">
@@ -12,9 +16,8 @@ import ThemeSwitch from './ThemeSwitch.astro';
 		</a>
 		<nav class="main-nav" aria-label="Main">
 			<ul>
-				<li><a href="/#experience">Experience</a></li>
-				<li><a href="/#projects">Projects</a></li>
-				<li><a href="/#skills">Skills</a></li>
+				<li><a href="/projects/" aria-current={projectsActive ? 'page' : undefined}>Projects</a></li>
+				<li><a href="/resume/" aria-current={resumeActive ? 'page' : undefined}>Resume</a></li>
 				<li><a href="/#contact">Contact</a></li>
 			</ul>
 		</nav>

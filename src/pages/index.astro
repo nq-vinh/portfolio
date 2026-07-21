@@ -10,9 +10,9 @@ import { profile } from '../data/profile';
 import { getPublishedProjects } from '../lib/projects';
 
 const projects = await getPublishedProjects();
-const featuredProject = projects.find(({ data }) => data.featured);
+const featuredProjects = projects.filter(({ data }) => data.featured);
 
-if (!featuredProject) throw new Error('The homepage requires a featured project.');
+if (featuredProjects.length === 0) throw new Error('The homepage requires a featured project.');
 
 const otherProjects = projects.filter(({ data }) => !data.featured);
 const title = `${profile.name} - ${profile.role}`;
@@ -40,31 +40,36 @@ const title = `${profile.name} - ${profile.role}`;
 			<HeroMeta />
 		</div>
 
-		<section id="projects" class="content-section" aria-labelledby="featured-project-title">
-			<p class="eyebrow">Featured case study</p>
-			<h2 id="featured-project-title" style={`view-transition-name: project-${featuredProject.id}`}>{featuredProject.data.title}</h2>
-			<p class="project-summary">{featuredProject.data.summary}</p>
-			<div class="project-card">
-				<ul class="hook-list">
-					{featuredProject.data.hooks.map((hook) => (
-						<li class="hook">
-							<p class="hook-misconception">"{hook.misconception}"</p>
-							<h3 class="hook-question">{hook.question}</h3>
-							<p class="hook-answer">
-								<strong>{hook.metric}.</strong> {hook.detail}
-								<a href={`/projects/${featuredProject.id}/#${hook.id}`}>
-									How<span class="visually-hidden"> - {hook.question}</span> →
-								</a>
-							</p>
-						</li>
-					))}
-				</ul>
-				<TagList items={featuredProject.data.tags} label={`${featuredProject.data.title} technologies`} />
-				<div class="project-actions">
-					<a href={`/projects/${featuredProject.id}/`}>Read the case study →</a>
-					{featuredProject.data.repo && <a href={featuredProject.data.repo}>View source</a>}
-				</div>
-			</div>
+		<section id="projects" class="content-section" aria-label="Featured case studies">
+			<p class="eyebrow">Featured case {featuredProjects.length > 1 ? 'studies' : 'study'}</p>
+			{featuredProjects.map((project) => (
+				<article class="featured-project" aria-labelledby={`featured-${project.id}-title`}>
+					<h2 class="featured-project-title" id={`featured-${project.id}-title`} style={`view-transition-name: project-${project.id}`}>{project.data.title}</h2>
+					<p class="project-summary">{project.data.summary}</p>
+					<div class="project-card">
+						<ul class="hook-list">
+							{project.data.hooks.map((hook) => (
+								<li class="hook">
+									<p class="hook-misconception">"{hook.misconception}"</p>
+									<h3 class="hook-question">{hook.question}</h3>
+									<p class="hook-answer">
+										<strong>{hook.metric}.</strong> {hook.detail}
+										<a href={`/projects/${project.id}/#${hook.id}`}>
+											How<span class="visually-hidden"> - {hook.question}</span> →
+										</a>
+									</p>
+								</li>
+							))}
+						</ul>
+						<TagList items={project.data.tags} label={`${project.data.title} technologies`} />
+						<div class="project-actions">
+							<a href={`/projects/${project.id}/`}>Read the case study →</a>
+							{project.data.live && <a href={project.data.live}>Visit the live app</a>}
+							{project.data.repo && <a href={project.data.repo}>View source</a>}
+						</div>
+					</div>
+				</article>
+			))}
 			{otherProjects.length > 0 && (
 				<div class="project-list project-list-secondary">
 					<h3>More projects</h3>

@@ -70,6 +70,7 @@ const articleSchema = {
 			<h1 style={`view-transition-name: project-${entry.id}`}>{entry.data.title}</h1>
 			<p class="case-study-summary">{entry.data.summary}</p>
 			<TagList items={entry.data.tags} label={`${entry.data.title} technologies`} />
+			{entry.data.live && <a class="case-study-source" href={entry.data.live}>Visit the live app</a>}
 			{entry.data.repo && <a class="case-study-source" href={entry.data.repo}>View source on GitHub</a>}
 		</header>
 
@@ -87,6 +88,7 @@ const articleSchema = {
 		</article>
 
 		<footer class="case-study-footer">
+			{entry.data.live && <a href={entry.data.live}>Visit the live app →</a>}
 			{entry.data.repo && <a href={entry.data.repo}>View source on GitHub →</a>}
 			{(previous || next) && (
 				<nav aria-label="More projects">

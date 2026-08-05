@@ -1,0 +1,14 @@
+---
+import { profile } from '../data/profile';
+import { obfuscatedMailto, obfuscatedEmailHtml } from '../lib/email';
+
+interface Props {
+	class?: string;
+}
+
+const { class: className } = Astro.props;
+const openTag = `<a${className ? ` class="${className}"` : ''} href="${obfuscatedMailto(profile.email)}">`;
+const hasSlot = Astro.slots.has('default');
+---
+
+<Fragment set:html={openTag} />{hasSlot ? <slot /> : <Fragment set:html={obfuscatedEmailHtml(profile.email)} />}<Fragment set:html={'</a>'} />

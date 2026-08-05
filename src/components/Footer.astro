@@ -1,4 +1,5 @@
 ---
+import ObfuscatedEmail from './ObfuscatedEmail.astro';
 import { profile } from '../data/profile';
 
 const year = new Date().getFullYear();
@@ -19,7 +20,7 @@ const githubLink = profile.socialLinks.find((link) => link.icon === 'github');
 					</>
 				)}
 				<span aria-hidden="true">·</span>
-				<a href={`mailto:${profile.email}`}>{profile.email}</a>
+				<ObfuscatedEmail />
 			</nav>
 		</div>
 	</div>

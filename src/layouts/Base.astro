@@ -27,7 +27,6 @@ const personSchema = {
 		addressLocality: profile.location.city,
 		addressCountry: profile.location.country,
 	},
-	email: `mailto:${profile.email}`,
 	sameAs: profile.socialLinks.map((link) => link.href),
 };
 ---

@@ -126,6 +126,10 @@ ul {
 	border: 0;
 }
 
+.ns {
+	display: none;
+}
+
 .skip-link {
 	position: fixed;
 	top: 0.75rem;

@@ -1,6 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import HeroMeta from '../components/HeroMeta.astro';
+import ObfuscatedEmail from '../components/ObfuscatedEmail.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import SocialLinks from '../components/SocialLinks.astro';
 import TagList from '../components/TagList.astro';
@@ -97,7 +98,7 @@ const title = `${profile.name} - ${profile.role}`;
 		<section id="contact" class="content-section contact" aria-labelledby="contact-title">
 			<SectionHeader headingId="contact-title" title="Contact" />
 			<p>The fastest way to reach me is email. I'm open to senior frontend roles in the Rhein-Main area or remote.</p>
-			<a class="contact-email" href={`mailto:${profile.email}`}>{profile.email}</a>
+			<ObfuscatedEmail class="contact-email" />
 			<ul class="contact-links" aria-label="Social links">
 				<SocialLinks />
 			</ul>

@@ -12,22 +12,19 @@ featured: true
 repo: https://github.com/nq-vinh/pipe-scope
 live: https://pipescope.nqvinh.tech
 cover:
-  src: ./pipe-scope/design-system.png
-  alt: PipeScope's design system page, showing colour token cards with their resolved hex values and runtime contrast ratios.
-  caption: The design system documents itself against the running app. Each swatch reads its own resolved value from the active theme and measures the contrast ratio at runtime, so the 4.5:1 figure in the stats is computed on the page rather than asserted in a spec that nobody re-checks after a token moves.
+  src: ./pipe-scope/live-monitor.png
+  alt: PipeScope's live monitor in dark theme, with velocity, pressure and temperature tiles above an oscilloscope-style ultrasound trace with a persistence trail.
+  caption: The 40 Hz ultrasound stream drawn on canvas, with the monitor printing its own measured draw rate under the trace - 120 fps in this frame.
 gallery:
-  - src: ./pipe-scope/components.png
-    alt: The shared UI examples section of the design system page in dark theme, showing badge, button, card, icon and theme switch primitives with usage notes.
-    caption: Every primitive is documented by rendering the real component rather than generating a prop table, so an example cannot describe behaviour the component no longer has. Each one shows its variants - the button's primary, secondary and quiet - and its usage rule, which is the part that actually stops a system fragmenting.
-  - src: ./pipe-scope/live-monitor.png
-    alt: The live monitor, showing an oscilloscope-style ultrasound trace with a persistence trail below three telemetry stat tiles.
-    caption: The telemetry trace is a canvas ring buffer holding four seconds at 40 Hz, drawn on requestAnimationFrame with a ten-frame persistence trail. The draw loop sits deliberately outside Angular's reactivity; the app prints its own measured frame rate so the claim is checkable on screen.
-  - src: ./pipe-scope/run-detail.png
-    alt: A run detail view combining an SVG pipeline map with anomaly markers and a side analysis panel.
-    caption: The pipeline map is SVG rather than canvas because its markers carry meaning. They form a roving tabindex with Home, End, Enter and Space, and the same anomalies are exposed as a native table for anyone not using a pointer.
   - src: ./pipe-scope/runs-overview.png
-    alt: The runs overview, showing aggregate stat tiles above a sortable table of inspection runs.
-    caption: The table is one generic component parameterised by typed column definitions carrying their own cell renderers and comparators, so sorting and aria-sort behaviour are defined once rather than per screen.
+    alt: The runs overview in light theme, with aggregate tiles for distance inspected, anomalies and critical findings above filter controls and a sortable table of runs.
+    caption: All 24 runs, 1,377 km and 312 anomalies derive from one seeded generator, so every number on this screen is identical on every load.
+  - src: ./pipe-scope/run-detail.png
+    alt: A run detail page with an SVG pipeline map, a selected critical anomaly marker, and an analysis panel showing confidence, measurements and an ultrasound heatmap.
+    caption: Every marker on the SVG map is a real button - the selected one announces itself as "Weld anomaly, critical severity, at 15,837 m, 91 % confidence".
+  - src: ./pipe-scope/design-system.png
+    alt: The design system's colour token cards, each showing a CSS variable, its resolved hex value and a contrast ratio measured at runtime.
+    caption: Each swatch reads its resolved value from the active theme and measures its contrast ratio at runtime, so the documentation cannot drift from the app.
 stats:
   - value: '0'
     label: zone.js in the app

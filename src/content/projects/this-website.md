@@ -10,9 +10,19 @@ date: 2026-07-21
 featured: false
 repo: https://github.com/nq-vinh/portfolio
 cover:
-  src: ./this-website/resume-page.png
-  alt: The resume page of this site, showing the experience timeline and skill groups in the site's own type and colour system.
-  caption: The resume is a page, not an attachment. Its print path turns this exact document into a clean PDF, so there is no second file to keep in sync - and the timeline and skill groups behind it are typed data in the repo rather than markup to hand-edit.
+  src: ./this-website/homepage.png
+  alt: The portfolio homepage in light theme, with a short hero introduction above the featured project showcase.
+  caption: The homepage leads with the work itself - and apart from two tiny inline theme snippets, everything on it is HTML and CSS.
+gallery:
+  - src: ./this-website/case-study.png
+    alt: A case-study page in dark theme, with title, summary, tag list, stat tiles and the opening gallery figure.
+    caption: The stats and hooks on a case-study page are asserted at build time against the page's own prose, so a stale claim fails the build instead of shipping.
+  - src: ./this-website/resume-page.png
+    alt: The resume page in light theme, with name, role and summary above an experience timeline.
+    caption: The resume is typed data rendered as a page - experience and skills live in the repo as TypeScript, not in a document to hand-edit.
+  - src: ./this-website/resume-print.png
+    alt: The same resume page under print media, with navigation gone and social icons replaced by spelled-out URLs.
+    caption: The same URL through the print stylesheet is the PDF resume - the chrome disappears and links spell themselves out, so there is no second file to keep in sync.
 stats:
   - value: 0 KB
     label: client JavaScript

@@ -12,26 +12,26 @@ featured: true
 repo: https://github.com/nq-vinh/facet
 live: https://facet.nqvinh.tech
 cover:
-  src: ./facet/catalog.png
-  alt: Facet's catalog view, a filter sidebar beside a grid of product cards with generated geometric artwork.
-  caption: Ten thousand products behind eight facet groups, with every count live as you narrow. The filtering runs in a Web Worker over typed-array columns rather than an array of objects, so typing in the search box never competes with the render, and the product artwork is generated from each product's own attributes instead of fetched.
+  src: ./facet/catalog-filtered.png
+  alt: Facet's catalog filtered to Seating, with live counts in the filter sidebar beside a grid of product cards with generated artwork.
+  caption: One checked facet narrows 10,000 products to 1,219, and every remaining count in the sidebar has already been recomputed off the main thread.
 gallery:
-  - src: ./facet/data-grid.png
-    alt: The catalog in table view, a sortable data grid with thumbnail, name, brand, category, price, rating, and stock columns.
-    caption: The same 10,000 rows as a real table rather than a div grid, so sorting, row semantics and aria-sort come from the platform. Rows are windowed inside a sized tbody and translated individually, which keeps native table semantics intact while only about 320 nodes exist at once.
-  - src: ./facet/catalog-dark.png
-    alt: The catalog view in dark theme, with the generated product artwork adapting to the darker surface.
-    caption: One token layer drives both themes. The product artwork is generated rather than photographed, so it re-derives against the dark palette instead of sitting in a bright box.
-  - src: ./facet/product-detail.png
-    alt: A product detail page in dark theme, with a large generated hero image beside price, rating, colour and size options.
-    caption: The card image and the detail hero share a view-transition-name, so navigation morphs one into the other. It is feature-detected and disabled entirely under prefers-reduced-motion.
+  - src: ./facet/table-sorted.png
+    alt: The catalog as a table sorted by price, mid-scroll through thousands of rows, with thumbnail, name, brand, category, price, rating and stock columns.
+    caption: Row five thousand of a real table sorted by price - 23 rows exist in the DOM, and aria-rowcount still describes all 10,000.
+  - src: ./facet/search-hud.png
+    alt: The catalog searched for "oak", with the performance HUD in the corner reporting interaction latency, long tasks and DOM node count.
+    caption: Typing "oak" refilters all 10,000 products, and the built-in HUD shows the receipt - a 24 ms interaction and zero long tasks.
+  - src: ./facet/product-detail-dark.png
+    alt: A product detail page in dark theme, with a large generated hero image beside price, stock badge, colour and size options.
+    caption: Every product image, this hero included, is drawn at runtime from the product's own attributes, so the storefront ships no image files.
 stats:
   - value: 52 KB
     label: JavaScript, gzipped
   - value: '10,000'
     label: products, none fetched
-  - value: '~320'
-    label: DOM nodes for 10,000 rows
+  - value: '23'
+    label: DOM rows while scrolling 10,000
   - value: '0'
     label: virtual DOM in the bundle
   - value: '2'
@@ -47,10 +47,10 @@ hooks:
     question: How much virtual DOM is in this bundle?
     metric: '0'
     detail: Every component compiles through Vue's Vapor mode, and a build step greps the unminified output for virtual-DOM markers so the claim fails the build rather than quietly rotting.
-  - id: ten-thousand-rows-three-hundred-nodes
+  - id: ten-thousand-rows-twenty-three-in-the-dom
     misconception: Virtualised lists are a trade - you get the performance and you give up real table semantics and keyboard behaviour.
-    question: How much DOM does it take to scroll ten thousand rows?
-    metric: '~320 nodes'
+    question: How many rows does it take to scroll ten thousand?
+    metric: '23'
     detail: The table is a real grid with aria-rowcount over the full virtual set, roving focus that survives row recycling, and Home, End, PageUp and PageDown all landing where a keyboard user would expect.
 ---
 
@@ -105,7 +105,7 @@ if (totalGzipBytes > gzipBudgetBytes) {
 
 *Absence is the hard half. Checking that the Vapor markers are present too means the audit fails loudly if a future Vue release renames them, rather than passing because it found nothing either way.*
 
-## Ten thousand rows, three hundred nodes
+## Ten thousand rows, twenty-three in the DOM
 
 *Misconception: Virtualised lists are a trade - you get the performance and you give up real table semantics and keyboard behaviour.*
 

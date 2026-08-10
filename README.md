@@ -11,13 +11,20 @@ Editing the site means editing those files, not the markup.
 - **Zero client-side JavaScript by default.**
   The only executable scripts are two small inline ones: a pre-paint boot in the document head that applies the stored theme before first render (so there is no theme flash), and the theme toggle logic itself.
   A third inline block is declarative Speculation Rules JSON (never executed) that prefetches same-origin pages on hover.
-- **Seamless navigation without JavaScript:** cross-document View Transitions via the CSS `@view-transition` rule (the featured project title morphs into the case-study heading), disabled under `prefers-reduced-motion`; browsers without support get plain navigation.
+- **A real token layer.**
+  Colour, a 7-step type scale, an 8-rung fluid spacing scale and 3 radii are CSS custom properties on `:root`; nothing in the stylesheet hard-codes a size.
+  Cards, figures, galleries and the contribution-scope block are components under `src/components/`, so a case study and the homepage grid cannot drift apart.
+- **Seamless navigation without JavaScript:** cross-document View Transitions via the CSS `@view-transition` rule (the lead project card morphs into the case-study heading), disabled under `prefers-reduced-motion`; browsers without support get plain navigation.
 - **No render-blocking requests beyond the document.**
   All CSS is inlined at build time (`build.inlineStylesheets: 'always'`), the HTML is minified (`compressHTML`), the one webfont (Inter) is self-hosted, subset, and preloaded, and there are no third-party resources.
 - **Performance:** Lighthouse 100/100/100/100, LCP around 1.1s on throttled 4G, zero cumulative layout shift.
   The portrait is optimized at build time by `astro:assets` into responsive AVIF/WebP sources with explicit dimensions.
 - **Accessibility:** semantic landmarks, a single `h1` with strict heading order, a skip link, visible focus styles, keyboard-operable everything, and WCAG AA+ contrast in both themes.
-  Verified with axe.
+  Verified with axe across every page in both themes at desktop and mobile widths.
+- **The claims are enforced at build time.**
+  `scripts/verify-csp.mjs` hashes every inline script in `dist/` and fails the build if the set drifts from the `script-src` directive, so the three pinned hashes cannot silently rot.
+  It also checks the case study that documents the CSP against the real build.
+  Separately, every project's hook IDs must resolve to real heading anchors and every misconception must appear verbatim in the prose, and the homepage refuses to build if a project has no cover image.
 - **Theming:** automatic light/dark via `prefers-color-scheme` plus an accessible toggle button (`aria-pressed`).
   A choice that differs from the OS preference is persisted in `localStorage`; toggling back to match the OS clears the override so the site follows the system again.
   The active theme is reflected through the `color-scheme` property.

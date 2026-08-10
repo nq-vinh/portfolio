@@ -27,3 +27,6 @@ pnpm-debug.log*
 .playwright-cli/
 .playwright/
 .claude/
+
+# Private interview prep, never published
+notes/

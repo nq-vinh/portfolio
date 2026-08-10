@@ -26,6 +26,31 @@
 	--color-accent-surface: light-dark(#eef7dc, #1f2e08);
 	--color-border: light-dark(#80807c, #7e7e86);
 	--measure: 66ch;
+
+	/* Type scale. Endpoints match the previous hand-tuned values; only the
+	   interpolation curve is regularised. */
+	--type-xs: clamp(0.7rem, 0.68rem + 0.1vw, 0.78rem);
+	--type-sm: clamp(0.82rem, 0.79rem + 0.14vw, 0.9rem);
+	--type-base: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+	--type-md: clamp(1.1rem, 1.05rem + 0.25vw, 1.3rem);
+	--type-lg: clamp(1.25rem, 1.1rem + 0.7vw, 1.75rem);
+	--type-xl: clamp(1.75rem, 1.5rem + 1.1vw, 2.35rem);
+	--type-2xl: clamp(2rem, 1.4rem + 2.6vw, 3.5rem);
+
+	/* Spacing scale, ~1.4 ratio, fluid across the 320px-to-4K range. */
+	--space-1: clamp(0.25rem, 0.23rem + 0.08vw, 0.35rem);
+	--space-2: clamp(0.5rem, 0.46rem + 0.12vw, 0.65rem);
+	--space-3: clamp(0.75rem, 0.67rem + 0.25vw, 1rem);
+	--space-4: clamp(1rem, 0.9rem + 0.35vw, 1.35rem);
+	--space-5: clamp(1.5rem, 1.3rem + 0.65vw, 2rem);
+	--space-6: clamp(2rem, 1.65rem + 1.1vw, 3rem);
+	--space-7: clamp(3rem, 2.3rem + 2vw, 5rem);
+	--space-8: clamp(4.5rem, 3rem + 4vw, 8rem);
+
+	--radius-sm: 0.25rem;
+	--radius-md: 0.625rem;
+	--radius-lg: 1rem;
+	--radius-pill: 999px;
 	--font-mono: ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, Consolas, monospace;
 	font-family: 'Inter', 'Inter Fallback', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
 }
@@ -53,7 +78,7 @@ body {
 	min-width: 20rem;
 	margin: 0;
 	color: var(--color-text);
-	font-size: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+	font-size: var(--type-base);
 	line-height: 1.65;
 	overflow-wrap: break-word;
 }
@@ -93,25 +118,25 @@ h3 {
 }
 
 h1 {
-	margin-block-end: clamp(1.25rem, 3vw, 2rem);
-	font-size: clamp(2rem, 6vw, 3.5rem);
+	margin-block-end: var(--space-5);
+	font-size: var(--type-2xl);
 	font-weight: 700;
 	letter-spacing: -0.04em;
 }
 
 h2 {
 	margin-block-end: 0;
-	font-size: clamp(1.75rem, 4vw, 2.35rem);
+	font-size: var(--type-xl);
 	letter-spacing: -0.025em;
 }
 
 h3 {
-	margin-block-end: clamp(0.35rem, 1vw, 0.6rem);
-	font-size: clamp(1.1rem, 2vw, 1.3rem);
+	margin-block-end: var(--space-2);
+	font-size: var(--type-md);
 }
 
 ul {
-	padding-inline-start: 1.25rem;
+	padding-inline-start: var(--space-4);
 }
 
 .visually-hidden {
@@ -132,13 +157,13 @@ ul {
 
 .skip-link {
 	position: fixed;
-	top: 0.75rem;
-	left: 0.75rem;
+	top: var(--space-2);
+	left: var(--space-2);
 	z-index: 20;
-	padding: 0.65rem 0.85rem;
+	padding: var(--space-2) var(--space-3);
 	border: 2px solid var(--color-accent);
 	background: var(--color-bg);
-	transform: translateY(calc(-100% - 1rem));
+	transform: translateY(calc(-100% - var(--space-3)));
 }
 
 .skip-link:focus {
@@ -157,17 +182,17 @@ ul {
 	display: grid;
 	grid-template-columns: auto minmax(0, 1fr);
 	align-items: center;
-	gap: clamp(0.65rem, 2vw, 1.25rem);
+	gap: var(--space-4);
 	width: min(100%, 72rem);
 	margin-inline: auto;
-	padding: clamp(0.65rem, 1.5vw, 1rem) clamp(1rem, 4vw, 2rem);
+	padding: var(--space-3) var(--space-5);
 }
 
 .site-brand {
 	display: inline-grid;
 	width: 2.5rem;
 	height: 2.5rem;
-	border-radius: 0.65rem;
+	border-radius: var(--radius-md);
 	place-items: center;
 	overflow: hidden;
 	text-decoration: none;
@@ -196,14 +221,14 @@ ul {
 
 .main-nav ul {
 	justify-content: space-between;
-	gap: 0.4rem clamp(0.75rem, 3vw, 1.5rem);
+	gap: var(--space-1) var(--space-4);
 }
 
 .main-nav a {
-	font-size: clamp(0.78rem, 2.5vw, 0.9rem);
+	font-size: var(--type-sm);
 	text-decoration: none;
 	/* inline vertical padding grows the tap target to >=24px (WCAG 2.5.8) without affecting the line box */
-	padding-block: 0.5rem;
+	padding-block: var(--space-1);
 }
 
 .main-nav a:hover {
@@ -226,7 +251,7 @@ ul {
 	height: 2.25rem;
 	padding: 0;
 	border: 1px solid var(--color-border);
-	border-radius: 0.65rem;
+	border-radius: var(--radius-md);
 	background: var(--color-surface);
 	color: var(--color-text);
 	cursor: pointer;
@@ -254,13 +279,13 @@ ul {
 .footer-inner {
 	width: min(100%, 72rem);
 	margin-inline: auto;
-	padding-inline: clamp(1rem, 4vw, 2rem);
+	padding-inline: var(--space-5);
 }
 
 .hero {
 	display: grid;
-	gap: clamp(1.5rem, 4vw, 2.5rem);
-	padding-block: clamp(3rem, 7vw, 5rem);
+	gap: var(--space-6);
+	padding-block: var(--space-6) var(--space-5);
 }
 
 .hero-copy {
@@ -269,10 +294,10 @@ ul {
 
 .eyebrow,
 .entry-label {
-	margin-block-end: clamp(0.65rem, 2vw, 1rem);
+	margin-block-end: var(--space-3);
 	color: var(--color-accent);
 	font-family: var(--font-mono);
-	font-size: clamp(0.72rem, 1.5vw, 0.82rem);
+	font-size: var(--type-xs);
 	font-weight: 700;
 	letter-spacing: 0.1em;
 	line-height: 1.4;
@@ -280,7 +305,7 @@ ul {
 }
 
 .hero-copy h1 {
-	margin-block-end: clamp(0.5rem, 1.5vw, 0.75rem);
+	margin-block-end: var(--space-2);
 	font-weight: 400;
 }
 
@@ -289,9 +314,9 @@ ul {
 }
 
 .hero-role {
-	margin-block-end: clamp(1.25rem, 3vw, 2rem);
+	margin-block-end: var(--space-5);
 	color: var(--color-accent);
-	font-size: clamp(1.25rem, 3.5vw, 1.75rem);
+	font-size: var(--type-lg);
 	font-weight: 700;
 	letter-spacing: -0.025em;
 	line-height: 1.15;
@@ -304,7 +329,7 @@ ul {
 }
 
 .hero-meta {
-	gap: 0.55rem 1.25rem;
+	gap: var(--space-2) var(--space-4);
 	align-items: center;
 	color: var(--color-muted);
 	font-size: 0.92em;
@@ -313,8 +338,8 @@ ul {
 .icon-link {
 	display: inline-flex;
 	/* padding grows the tap target to >=24px (WCAG 2.5.8) around the 20px icon; the negative margin keeps the visual rhythm */
-	padding: 0.25rem;
-	margin: -0.25rem;
+	padding: var(--space-1);
+	margin: calc(-1 * var(--space-1));
 	text-decoration: none;
 }
 
@@ -329,17 +354,17 @@ ul {
 .portrait img {
 	display: block;
 	border: 1px solid var(--color-border);
-	border-radius: 1.25rem;
+	border-radius: var(--radius-lg);
 	object-fit: cover;
 }
 
 .content-section {
-	padding-block: clamp(4rem, 9vw, 6.5rem);
+	padding-block: var(--space-7);
 	border-top: 1px solid var(--color-border);
 }
 
 .content > .content-section:first-child {
-	padding-block-start: clamp(3rem, 7vw, 5rem);
+	padding-block-start: var(--space-7);
 	border-top: 0;
 }
 
@@ -349,27 +374,26 @@ ul {
 }
 
 .section-header {
-	margin-block-end: clamp(2rem, 5vw, 3.5rem);
+	margin-block-end: var(--space-6);
 }
 
 .hero-copy h1::after,
 .case-study-header h1::after,
 .resume-intro h1::after,
 .project-index h1::after,
-.featured-project-title::after,
 .section-header h2::after {
 	content: '.';
 	color: var(--color-accent);
 }
 
 .timeline {
-	margin-left: 1.25rem;
+	margin-left: var(--space-4);
 	border-left: 1px solid var(--color-border);
 }
 
 .timeline-entry {
 	position: relative;
-	padding: 0 0 clamp(2.75rem, 7vw, 4rem) clamp(1.25rem, 4vw, 2rem);
+	padding: 0 0 var(--space-7) var(--space-5);
 	break-inside: avoid;
 }
 
@@ -379,10 +403,10 @@ ul {
 
 .timeline-entry::before {
 	position: absolute;
-	top: 0.25rem;
+	top: var(--space-1);
 	left: -0.42rem;
-	width: 0.75rem;
-	height: 0.75rem;
+	width: var(--space-2);
+	height: var(--space-2);
 	border: 2px solid var(--color-bg);
 	border-radius: 50%;
 	background: currentColor;
@@ -390,12 +414,12 @@ ul {
 }
 
 .timeline-role {
-	margin-block-end: 0.2rem;
+	margin-block-end: var(--space-1);
 	font-weight: 650;
 }
 
 .timeline-meta {
-	margin-block-end: 1rem;
+	margin-block-end: var(--space-3);
 	color: var(--color-muted);
 	font-size: 0.9em;
 }
@@ -407,125 +431,17 @@ ul {
 }
 
 .timeline-entry li + li {
-	margin-block-start: 0.55rem;
+	margin-block-start: var(--space-2);
 }
 
 .timeline-entry-education .entry-label {
-	margin-block-end: 0.5rem;
-}
-
-.project {
-	padding-block: clamp(1.75rem, 5vw, 2.5rem);
-	break-inside: avoid;
-}
-
-.project:first-child {
-	padding-block-start: 0;
-}
-
-.project:last-child {
-	padding-block-end: 0;
-}
-
-.project > p {
-	max-width: var(--measure);
-	color: var(--color-muted);
-}
-
-.project h2 {
-	margin-block-end: clamp(0.35rem, 1vw, 0.6rem);
-	font-size: clamp(1.1rem, 2vw, 1.3rem);
-	letter-spacing: normal;
-}
-
-.featured-project + .featured-project {
-	margin-block-start: clamp(3rem, 8vw, 5rem);
-}
-
-.project-card {
-	margin-block-start: clamp(2rem, 5vw, 3.5rem);
-	padding: clamp(1.25rem, 4vw, 2.5rem);
-	border: 1px solid var(--color-border);
-	border-radius: 1rem;
-	background: var(--color-surface);
-}
-
-.project-summary {
-	max-width: var(--measure);
-	color: var(--color-muted);
-}
-
-.hook-list {
-	display: grid;
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-
-.hook {
-	padding-block: clamp(1.5rem, 4vw, 2.5rem);
-	border-top: 1px solid var(--color-border);
-}
-
-.hook:first-child {
-	padding-block-start: 0;
-	border-top: 0;
-}
-
-.hook:last-child {
-	padding-block-end: 0;
-}
-
-.hook-misconception {
-	max-width: var(--measure);
-	margin-block-end: clamp(1rem, 2.5vw, 1.5rem);
-	color: var(--color-muted);
-	font-size: 0.9em;
-}
-
-.hook-question {
-	max-width: 32ch;
-	margin-block-end: clamp(0.7rem, 2vw, 1rem);
-}
-
-.hook-answer {
-	max-width: var(--measure);
-	margin-block-end: 0;
-	color: var(--color-muted);
-}
-
-.hook-answer strong {
-	color: var(--color-accent);
-	font-size: 1.1em;
-}
-
-.hook-answer a {
-	white-space: nowrap;
-}
-
-.project-card > .tag-list {
-	margin-block-start: clamp(2rem, 5vw, 3rem);
-}
-
-.project-actions {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.75rem 1.5rem;
-	margin-block-start: clamp(1.75rem, 4vw, 2.5rem);
-}
-
-.project-list-secondary {
-	margin-block-start: clamp(3rem, 8vw, 5rem);
-}
-
-.project-list-secondary > h3 {
-	margin-block-end: 0;
+	margin-block-end: var(--space-1);
 }
 
 .now-list {
 	display: grid;
-	gap: 0.65rem;
-	margin: 0 0 clamp(1.5rem, 4vw, 2.5rem);
+	gap: var(--space-2);
+	margin: 0 0 var(--space-6);
 	padding: 0;
 	list-style: none;
 }
@@ -533,69 +449,69 @@ ul {
 .stat-list {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 0.75rem;
-	margin: clamp(2rem, 5vw, 3.5rem) 0 clamp(3rem, 8vw, 5rem);
+	gap: var(--space-2);
+	margin: var(--space-6) 0 var(--space-7);
 	padding: 0;
 	list-style: none;
 }
 
 .stat-list li {
 	min-width: 0;
-	padding: 1rem;
+	padding: var(--space-3);
 	border: 1px solid var(--color-border);
-	border-radius: 0.65rem;
+	border-radius: var(--radius-md);
 	background: var(--color-surface);
 }
 
 .stat-list strong {
 	display: block;
 	color: var(--color-accent);
-	font-size: clamp(1.25rem, 3vw, 1.75rem);
+	font-size: var(--type-lg);
 	line-height: 1.15;
 }
 
 .stat-list span {
 	display: block;
-	margin-block-start: 0.35rem;
+	margin-block-start: var(--space-1);
 	color: var(--color-muted);
 	font-family: var(--font-mono);
-	font-size: clamp(0.68rem, 1.4vw, 0.76rem);
+	font-size: var(--type-xs);
 	line-height: 1.35;
 }
 
 .case-study-page > a:first-child {
 	display: inline-block;
-	margin-block-start: clamp(2rem, 5vw, 3.5rem);
+	margin-block-start: var(--space-6);
 }
 
 .case-study-header {
-	padding-block: clamp(3rem, 8vw, 5rem) clamp(2rem, 5vw, 3.5rem);
+	padding-block: var(--space-7) var(--space-6);
 }
 
 .case-study-header h1 {
-	margin-block-end: clamp(1rem, 2.5vw, 1.5rem);
+	margin-block-end: var(--space-4);
 }
 
 .case-study-summary {
 	max-width: var(--measure);
-	margin-block-end: 1.5rem;
+	margin-block-end: var(--space-4);
 	color: var(--color-muted);
 }
 
 .case-study-source {
 	display: inline-block;
-	margin-block-start: 1.5rem;
+	margin-block-start: var(--space-4);
 }
 
 .case-study-source + .case-study-source {
-	margin-inline-start: 1.5rem;
+	margin-inline-start: var(--space-4);
 }
 
 .case-study-footer {
 	display: grid;
-	gap: 1rem;
-	margin-block: clamp(3rem, 8vw, 5rem) 0;
-	padding-block: clamp(2rem, 5vw, 3.5rem);
+	gap: var(--space-3);
+	margin-block: var(--space-7) 0;
+	padding-block: var(--space-6);
 	border-top: 1px solid var(--color-border);
 }
 
@@ -603,7 +519,7 @@ ul {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
-	gap: 0.75rem 1.5rem;
+	gap: var(--space-2) var(--space-4);
 }
 
 .case-study {
@@ -612,77 +528,223 @@ ul {
 
 .case-study h2,
 .case-study h3 {
-	margin-block-start: clamp(2.5rem, 7vw, 4rem);
+	margin-block-start: var(--space-7);
 }
 
 .case-study h2 {
-	padding-block-start: 1rem;
+	padding-block-start: var(--space-3);
 	border-top: 1px solid var(--color-border);
 }
 
 .case-study h3 {
-	font-size: clamp(1.1rem, 2vw, 1.3rem);
+	font-size: var(--type-md);
 }
 
 .case-study p,
 .case-study ul,
 .case-study ol,
-.case-study blockquote {
-	max-width: var(--measure);
-}
-
 .case-study ul,
 .case-study ol {
-	padding-inline-start: 1.25rem;
+	padding-inline-start: var(--space-4);
 }
 
 .case-study li + li {
-	margin-block-start: 0.6rem;
+	margin-block-start: var(--space-2);
 }
 
 .case-study blockquote {
+	max-width: var(--measure);
 	margin-inline: 0;
-	padding-inline: 1rem;
+	padding-inline: var(--space-3);
 	border-inline-start: 3px solid var(--color-accent);
 	color: var(--color-muted);
+}
+
+/* Caption for the code excerpt directly above it. Markdown gives us no
+   <figure>, so the convention is an emphasised line following a fenced block. */
+.case-study pre + p > em:only-child {
+	display: block;
+	max-width: var(--measure);
+	margin-block-start: calc(-1 * var(--space-2));
+	color: var(--color-muted);
+	font-size: var(--type-sm);
+	font-style: normal;
+	line-height: 1.5;
 }
 
 .case-study :not(pre) > code {
 	padding: 0.1em 0.3em;
 	border: 1px solid var(--color-border);
-	border-radius: 0.25rem;
+	border-radius: var(--radius-sm);
 	background: var(--color-surface);
 	font-size: 0.9em;
 }
 
 .case-study pre {
 	max-width: 100%;
-	margin-block: 1.5rem;
-	padding: 1rem;
-	overflow-x: auto;
+	margin-block: var(--space-4) var(--space-3);
+	padding: var(--space-4);
+	/* Wrapped rather than scrolled: a scrollable box that cannot take focus is
+	   unreachable from a keyboard, and markdown gives no way to add tabindex
+	   to a fence. Wrapping also keeps long lines readable on a phone. */
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
 	border: 1px solid var(--color-border);
+	border-radius: var(--radius-md);
 	background: var(--color-surface);
 	font-size: 0.82em;
-	line-height: 1.5;
+	line-height: 1.6;
+	tab-size: 2;
 }
 
 .case-study img {
 	max-width: 100%;
 	height: auto;
 	border: 1px solid var(--color-border);
-	border-radius: 1rem;
+	border-radius: var(--radius-lg);
+}
+
+.figure {
+	margin: 0;
+	max-width: var(--measure);
+}
+
+.figure-wide {
+	max-width: none;
+}
+
+.figure img {
+	display: block;
+	width: 100%;
+	height: auto;
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-lg);
+	background: var(--color-surface);
+}
+
+.figure figcaption {
+	max-width: var(--measure);
+	margin-block-start: var(--space-3);
+	color: var(--color-muted);
+	font-size: var(--type-sm);
+	line-height: 1.5;
+}
+
+.gallery {
+	display: grid;
+	gap: var(--space-7);
+	margin-block: var(--space-7);
+}
+
+.meta-block {
+	display: grid;
+	gap: var(--space-4);
+	margin-block: var(--space-6) 0;
+	padding-block: var(--space-5);
+	border-block: 1px solid var(--color-border);
+}
+
+.meta-block-row {
+	display: grid;
+	gap: var(--space-1) var(--space-5);
+}
+
+@media (min-width: 40rem) {
+	.meta-block-row {
+		grid-template-columns: 10rem minmax(0, 1fr);
+	}
+}
+
+.meta-block dt {
+	color: var(--color-muted);
+	font-family: var(--font-mono);
+	font-size: var(--type-xs);
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+.meta-block dd {
+	max-width: var(--measure);
+	margin: 0;
+}
+
+.meta-block-list {
+	margin: 0;
+	padding-left: var(--space-4);
+}
+
+.meta-block-list li + li {
+	margin-block-start: var(--space-1);
+}
+
+.project-grid {
+	display: grid;
+	gap: var(--space-7);
+	margin-block-start: var(--space-6);
+}
+
+@media (min-width: 48rem) {
+	.project-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.project-card-lead {
+		grid-column: 1 / -1;
+	}
+}
+
+.project-card-link {
+	display: block;
+	color: inherit;
+	font-weight: inherit;
+	text-decoration: none;
+}
+
+.project-card-cover {
+	display: block;
+	width: 100%;
+	height: auto;
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-lg);
+	background: var(--color-surface);
+}
+
+.project-card-title {
+	margin-block: var(--space-4) 0;
+	font-size: var(--type-lg);
+	font-weight: 700;
+	letter-spacing: -0.025em;
+}
+
+.project-card-link:hover .project-card-title,
+.project-card-link:focus-visible .project-card-title {
+	color: var(--color-accent);
+	text-decoration: underline;
+	text-decoration-thickness: 0.1em;
+	text-underline-offset: 0.2em;
+}
+
+.project-card-summary {
+	max-width: var(--measure);
+	margin-block: var(--space-2) 0;
+	color: var(--color-muted);
+}
+
+.project-card > .tag-list {
+	margin-block-start: var(--space-4);
 }
 
 .resume-intro {
-	padding-block: clamp(3rem, 7vw, 5rem);
+	padding-block: var(--space-7);
 }
 
 .resume-intro .hero-meta {
-	margin-block-start: clamp(1.5rem, 4vw, 2.5rem);
+	margin-block-start: var(--space-6);
 }
 
 .resume-closing {
-	padding-block: clamp(3rem, 8vw, 5rem);
+	padding-block: var(--space-7);
 	border-top: 1px solid var(--color-border);
 }
 
@@ -691,31 +753,31 @@ ul {
 }
 
 .resume-print-note {
-	margin-block-start: 1rem;
+	margin-block-start: var(--space-3);
 	color: var(--color-muted);
 	font-size: 0.9em;
 }
 
 .tag-list {
-	gap: 0.5rem;
+	gap: var(--space-1);
 }
 
 .tag {
-	padding: 0.22rem 0.55rem;
+	padding: var(--space-1) var(--space-2);
 	border: 1px solid var(--color-border);
-	border-radius: 999px;
+	border-radius: var(--radius-pill);
 	background: var(--color-surface);
 	font-family: var(--font-mono);
-	font-size: clamp(0.7rem, 1.5vw, 0.78rem);
+	font-size: var(--type-xs);
 }
 
 .skill-groups {
 	display: grid;
-	gap: clamp(2rem, 5vw, 3rem);
+	gap: var(--space-6);
 }
 
 .skill-group h3 {
-	margin-block-end: 0.9rem;
+	margin-block-end: var(--space-3);
 }
 
 .contact > p {
@@ -725,15 +787,15 @@ ul {
 
 .contact-email {
 	display: inline-block;
-	font-size: clamp(1.1rem, 4vw, 1.55rem);
+	font-size: var(--type-lg);
 }
 
 .contact .contact-email {
-	margin-block: clamp(1rem, 3vw, 1.5rem);
+	margin-block: var(--space-4);
 }
 
 .contact-links {
-	gap: 1.25rem;
+	gap: var(--space-4);
 }
 
 .site-footer {
@@ -741,7 +803,7 @@ ul {
 }
 
 .footer-inner {
-	padding-block: clamp(1.75rem, 5vw, 2.75rem);
+	padding-block: var(--space-6);
 	color: var(--color-muted);
 	font-size: 0.875rem;
 	text-align: center;
@@ -751,19 +813,19 @@ ul {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	gap: 0.45rem 0.65rem;
+	gap: var(--space-1) var(--space-2);
 }
 
 .footer-line nav {
 	display: inline-flex;
 	flex-wrap: wrap;
 	justify-content: center;
-	gap: 0.45rem 0.65rem;
+	gap: var(--space-1) var(--space-2);
 }
 
 .not-found {
 	min-height: calc(100svh - 12rem);
-	padding-block: clamp(5rem, 16vw, 10rem);
+	padding-block: var(--space-8);
 }
 
 .not-found p:not(.eyebrow) {
@@ -847,10 +909,7 @@ ul {
 	.site-header,
 	.content-section,
 	.timeline,
-	.project-list,
-	.project,
 	.project-card,
-	.hook,
 	.stat-list li,
 	.case-study blockquote,
 	.case-study pre,
@@ -891,12 +950,10 @@ ul {
 		color: #000;
 	}
 
-	.site-header {
-		position: static;
-	}
-
-	.main-nav,
-	.theme-toggle,
+	/* Site chrome is navigation, and navigation does not belong on paper.
+	   The footer only repeats links the document already carries. */
+	.site-header,
+	.site-footer,
 	.skip-link {
 		display: none;
 	}
@@ -905,9 +962,40 @@ ul {
 		color: #000;
 	}
 
+	/* A non-breaking space, because a leading space in generated content
+	   collapses against the preceding inline box. */
 	a[href^='http']::after {
-		content: ' (' attr(href) ')';
+		content: '\00a0(' attr(href) ')';
 		font-weight: 400;
+	}
+
+	/* Icon-only links print as their label plus URL. Without this the PDF shows
+	   a glyph with a bare URL jammed against it. */
+	.icon-link svg {
+		display: none;
+	}
+
+	.icon-link .visually-hidden {
+		position: static;
+		width: auto;
+		height: auto;
+		margin: 0;
+		overflow: visible;
+		clip: auto;
+		white-space: normal;
+	}
+
+	/* The address is already spelled out in the closing contact line. */
+	.hero-meta li:has(.icon-link[href^='mailto']) {
+		display: none;
+	}
+
+	/* Stop a section heading stranding itself at the foot of a page. */
+	.section-header,
+	h1,
+	h2,
+	h3 {
+		break-after: avoid;
 	}
 
 	.hero,
@@ -919,8 +1007,6 @@ ul {
 	.hero-meta,
 	.timeline-meta,
 	.timeline-entry ul,
-	.project > p,
-	.project-summary,
 	.hook-misconception,
 	.hook-answer,
 	.stat-list span,
@@ -931,21 +1017,27 @@ ul {
 		color: #000;
 	}
 
-	.timeline-entry,
-	.project,
-	.hook,
+	/* The base rule keeps entries whole on screen. On paper that strands the
+	   longest role and leaves most of the first page blank, so entries are
+	   allowed to split, with orphan and widow control keeping the break off a
+	   single stray line. */
+	.timeline-entry {
+		break-inside: auto;
+		padding-block-end: 1.25rem;
+		orphans: 3;
+		widows: 3;
+	}
+
 	.stat-list li {
 		break-inside: avoid;
 	}
 
-	.project-actions,
 	.case-study-footer,
 	.case-study-source,
 	.resume-print-note {
 		display: none;
 	}
 
-	.project-card,
 	.stat-list li,
 	.case-study pre {
 		background: #fff !important;

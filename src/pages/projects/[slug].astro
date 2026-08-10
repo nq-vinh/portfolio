@@ -1,5 +1,8 @@
 ---
 import { render, type CollectionEntry } from 'astro:content';
+import Figure from '../../components/Figure.astro';
+import Gallery from '../../components/Gallery.astro';
+import MetaBlock from '../../components/MetaBlock.astro';
 import TagList from '../../components/TagList.astro';
 import Base from '../../layouts/Base.astro';
 import { personId, profile } from '../../data/profile';
@@ -62,6 +65,8 @@ const articleSchema = {
 	description={entry.data.summary}
 	ogType="article"
 	jsonLd={articleSchema}
+	ogImage={entry.data.cover}
+	publishedTime={entry.data.date}
 >
 	<div class="content case-study-page">
 		<a href="/">← Home</a>
@@ -74,14 +79,33 @@ const articleSchema = {
 			{entry.data.repo && <a class="case-study-source" href={entry.data.repo}>View source on GitHub</a>}
 		</header>
 
-		<ul class="stat-list" aria-label="Key numbers">
-			{entry.data.stats.map((stat) => (
-				<li>
-					<strong>{stat.value}</strong>
-					<span>{stat.label}</span>
-				</li>
-			))}
-		</ul>
+		{
+			entry.data.cover && (
+				<Figure src={entry.data.cover.src} alt={entry.data.cover.alt} wide loading="eager" />
+			)
+		}
+
+		<MetaBlock
+			role={entry.data.role}
+			timeframe={entry.data.timeframe}
+			scope={entry.data.scope}
+			stack={entry.data.tags}
+		/>
+
+		{
+			entry.data.stats.length > 0 && (
+				<ul class="stat-list" aria-label="Key numbers">
+					{entry.data.stats.map((stat) => (
+						<li>
+							<strong>{stat.value}</strong>
+							<span>{stat.label}</span>
+						</li>
+					))}
+				</ul>
+			)
+		}
+
+		<Gallery items={entry.data.gallery} label={`${entry.data.title} screens`} />
 
 		<article class="case-study">
 			<Content />

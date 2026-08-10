@@ -32,15 +32,15 @@ export const profile = {
 		country: 'DE',
 	},
 	tagline:
-		"I build frontend interfaces where performance, accessibility, and the browser's fundamentals do the heavy lifting.",
+		'I build design systems and the production UI that ships from them - component APIs, design tokens, and interfaces where performance and accessibility are part of the contract.',
 	introduction:
-		"Six years of experience across Angular, Vue, and TypeScript. I've built real-time dashboards for industrial pipeline inspection, high-traffic e-commerce storefronts, and I care about the last 10%: performance budgets, accessibility. Currently pursuing an M.Sc. in Computer Science at TU Darmstadt.",
+		"Six years across Angular, Vue, and TypeScript, most of it spent on the layer where design becomes code: shared component libraries, design tokens, and the interfaces built from them. I've shipped real-time dashboards rendering sensor data at 40 Hz and high-traffic e-commerce storefronts, and I care about the last 10% - performance budgets, contrast ratios, keyboard paths. Currently pursuing an M.Sc. in Computer Science at TU Darmstadt.",
 	metaDescription:
-		'Senior frontend engineer in Darmstadt, Germany. Six years building Angular, Vue, and TypeScript applications - from real-time IoT dashboards to large-scale e-commerce storefronts.',
+		'Senior frontend engineer in Darmstadt, Germany. Six years building design systems and production UI in Angular, Vue, and TypeScript - from real-time dashboards to large-scale storefronts.',
 	now: [
 		"Senior Frontend Developer (Part-time) @ Web'n'sale.",
 		'M.Sc. Computer Science @ TU Darmstadt.',
-		'Darmstadt, Germany - open to senior frontend roles in the Rhein-Main area or remote.',
+		'Darmstadt, Germany - 20 minutes from Frankfurt. Open to senior frontend roles on-site, hybrid, or remote.',
 	],
 	socialLinks: [
 		{ label: 'GitHub', href: 'https://github.com/nq-vinh', icon: 'github' },

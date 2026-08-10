@@ -7,8 +7,17 @@ tags:
   - TypeScript
   - CSS
 date: 2026-07-21
-featured: true
+featured: false
 repo: https://github.com/nq-vinh/portfolio
+role: Sole designer and engineer
+timeframe: Ongoing since 2026
+cover:
+  src: ./this-website/resume-page.png
+  alt: The resume page of this site, showing the experience timeline and skill groups in the site's own type and colour system.
+scope:
+  - The design token layer, both themes, and the print stylesheet that doubles as the resume PDF
+  - A build step that pins every inline script by hash and fails when the CSP drifts
+  - Build-time assertions coupling each case study's claims to its own prose
 stats:
   - value: 0 KB
     label: client JavaScript
@@ -42,94 +51,48 @@ hooks:
 
 *Misconception: A site with theme switching, page transitions, and responsive images is running a framework bundle.*
 
-The page has no hydrated Astro component and no external script.
+No hydrated component, no external script, no bundle.
 
-The only executable client code is the pre-paint theme boot in `src/layouts/Base.astro` and the theme toggle in `src/components/ThemeSwitch.astro`.
-
-The built document contains three non-JSON-LD inline blocks: the two executable theme blocks and one declarative `type="speculationrules"` block for moderate same-origin prefetching.
-
-The speculation rules block is parsed as data by the browser, so it does not execute JavaScript or add a framework runtime.
+The only executable client code is the pre-paint theme boot in `src/layouts/Base.astro` and the toggle in `src/components/ThemeSwitch.astro`. A third inline block is declarative `type="speculationrules"` JSON, parsed as data rather than run.
 
 The exact UTF-8 byte sizes of all three inline bodies are recorded here from the compressed build: the pre-paint boot is 195 bytes, the theme switch is 1267 bytes, and the speculation rules body is 89 bytes.
 
-That is why the homepage can keep a theme toggle, responsive `Picture` output, and cross-document view transitions without hydration.
+Everything else - the theme toggle, responsive `Picture` output, cross-document view transitions - is HTML and CSS.
 
 ## Zero layout shift
 
 *Misconception: Custom web fonts always cost a flash of fallback text or a visible reflow.*
 
-`src/styles/global.css` defines an `Inter Fallback` face with the exact metric overrides used for the fallback path.
+`global.css` declares an `Inter Fallback` face metric-matched to Inter: `ascent-override: 90%`, `descent-override: 22.43%`, `line-gap-override: 0%`, `size-adjust: 107.4%`.
 
-The source values are `ascent-override: 90%`, `descent-override: 22.43%`, `line-gap-override: 0%`, and `size-adjust: 107.4%`.
-
-The font uses `font-display: swap`, while the portrait output declares 112 pixel dimensions and uses responsive AVIF and WebP sources.
-
-The fallback and final font therefore occupy the same measurable space during the swap, including the line breaks in the introduction and case-study hooks.
-
-The result is the `0.000 CLS` target recorded in the case-study stats rather than a claim based on visual feel.
+Fallback and final font occupy the same space during the swap, down to where the lines break, so the swap moves nothing and CLS stays at `0.000` rather than merely feeling stable.
 
 ## One request to first paint
 
 *Misconception: Sites feel this fast because of a CDN, caching, and a service worker.*
 
-The Astro build sets `build.inlineStylesheets` to `always` in `astro.config.mjs`.
+`build.inlineStylesheets: 'always'` puts every byte of CSS inside the document, so there is no render-blocking stylesheet fetch before the browser can paint.
 
-Astro emits the page CSS inside the document, so the browser does not need a render-blocking stylesheet request before it can paint the layout.
+The font preload and the optimised portrait are ordinary hints. The prefetch speculation rule only fires once a visitor hovers a same-origin link, so it never contributes to the first-paint measurement.
 
-The font preload and optimized portrait remain ordinary resource hints, but the critical path has no external CSS or JavaScript dependency.
+## Enforced, not claimed
 
-The `prefetch` speculation rule starts only after a user shows intent by hovering a same-origin link, so it does not change the one-request-to-paint measurement.
+The interesting part is not the numbers. It is that the build refuses to ship when they stop being true.
 
-## A CSP with nothing to allow
-
-*Misconception: A static portfolio cannot enforce production-grade browser security without a backend.*
-
-The root `staticwebapp.config.json` sends a restrictive Content Security Policy and keeps the static host responsible for the browser boundary.
-
-The current directive is:
+The host sends a `default-src 'none'` policy where the only executable scripts are three SHA-256 hashes:
 
 ```text
 default-src 'none'; connect-src 'self'; script-src 'sha256-FzYV65K3v7bE7vrjFw+hgSsUVHwNk4F9UUy+L3bPVnQ=' 'sha256-l6TIiISDUQaHYtCj8kZwEAsrve068cnMyzNucFrQOt8=' 'sha256-OGzK6U4An6xAiEgFeb7wUMf8VfUm6Cz8x3x5dDof3+k='; style-src 'unsafe-inline'; img-src 'self'; font-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
 ```
 
-`default-src 'none'` denies unspecified resource classes, while `img-src 'self'` and `font-src 'self'` keep media and fonts on the site origin.
+*Hand-maintaining three hashes is a trap, so `scripts/verify-csp.mjs` walks every built HTML file, hashes each inline body, and fails the build when the set drifts from the directive. HSTS runs a year with `preload`, and the domain is on the browser preload lists.*
 
-The two executable theme scripts are accepted only by their SHA-256 hashes, and JSON-LD plus speculation rules are handled as non-executable data blocks.
+The same script checks this page against the build: the directive quoted above and the three byte counts are compared to what actually shipped, so the case study cannot silently diverge from the artefact it describes.
 
-`scripts/verify-csp.mjs` walks every HTML file under `dist/`, skips scripts with a `src` attribute and `application/ld+json`, hashes every remaining body with SHA-256 and base64, and compares that required set with the declared `script-src` set.
-
-The verifier prints missing and stale tokens and exits with status 1 when the sets differ, which turns an accidental inline-script change into a build failure.
-
-It also checks this very page: the directive quoted above and the inline-script byte sizes are compared against the build, so the claims here cannot silently drift from production.
-
-The same configuration also sends `Strict-Transport-Security` with one year, `includeSubDomains`, and `preload`.
-
-## WCAG AA+ in both themes
-
-*Misconception: Performance work is mostly about making a page faster, while accessibility is a separate layer added later.*
-
-The layout owns one semantic `<main>` landmark, each page supplies one `h1`, and the skip link targets that main content directly.
-
-The hook questions are real `h3` headings, the header and footer links use labeled navigation landmarks, and the active primary route exposes `aria-current="page"`.
-
-Keyboard focus is visible through the global `:focus-visible` rule, and the theme control is a button with an `aria-pressed` state that follows the effective theme.
-
-The stylesheet includes explicit `prefers-contrast: more`, `forced-colors: active`, and `prefers-reduced-motion` paths so the new cards, hooks, and stat strip retain borders, contrast, and usable navigation under those preferences.
-
-Those concrete browser behaviors are why the case-study stat strip reports WCAG AA+ in both themes instead of treating accessibility as a post-launch audit.
-
-## The build contract
-
-Project metadata lives in the Astro content collection at `src/content.config.ts`, and each published Markdown entry supplies its own summary, tags, stats, and hook anchors.
-
-The dynamic case-study route renders entries with `render(entry)` and throws during the build if a hook ID is missing from the rendered heading list.
-
-That assertion keeps the homepage's explanatory links and the case-study's anchor IDs coupled at build time.
+The content collection is held to the same standard. Every project's hook IDs must resolve to real heading anchors and every misconception string must appear verbatim in the prose, or the build throws - which is why the claims on a case study and the case study itself cannot drift apart.
 
 ## The result
 
-The implementation keeps the document as the primary product surface and uses browser primitives for the remaining polish.
+Four Lighthouse categories at 100, zero layout shift, WCAG AA+ contrast in both themes, and a single semantic `main` landmark with a working skip link and visible focus throughout.
 
-Cross-document view transitions are enabled with `@view-transition`, while reduced-motion users receive the spec-sanctioned `navigation: none` switch.
-
-The same source now powers the featured homepage card, the projects index, the case-study page, and the sitemap without duplicating project metadata.
+The stylesheet carries explicit `prefers-contrast: more`, `forced-colors: active`, `prefers-reduced-motion` and print paths, so the card grid, galleries and stat strip stay usable under all of them - and the print path is what turns the resume page into a clean PDF.

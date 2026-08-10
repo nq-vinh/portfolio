@@ -1,0 +1,21 @@
+---
+import type { ImageMetadata } from 'astro';
+import Figure from './Figure.astro';
+
+interface Props {
+	items: readonly { src: ImageMetadata; alt: string; caption: string }[];
+	label?: string;
+}
+
+const { items, label = 'Screens' } = Astro.props;
+---
+
+{
+	items.length > 0 && (
+		<section class="gallery" aria-label={label}>
+			{items.map((item) => (
+				<Figure src={item.src} alt={item.alt} caption={item.caption} wide />
+			))}
+		</section>
+	)
+}

@@ -1,0 +1,44 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import TagList from './TagList.astro';
+
+interface Props {
+	project: CollectionEntry<'projects'>;
+	lead?: boolean;
+	/**
+	 * Depends on what precedes the grid: h3 under a section heading on the
+	 * homepage, h2 directly under the page title on the work index. Passing it
+	 * explicitly is what keeps heading order sequential on both.
+	 */
+	headingLevel?: 2 | 3;
+}
+
+const { project, lead = false, headingLevel = 3 } = Astro.props;
+const { title, summary, tags, cover } = project.data;
+const href = `/projects/${project.id}/`;
+const Heading = `h${headingLevel}` as const;
+---
+
+<article class:list={['project-card', lead && 'project-card-lead']}>
+	<a class="project-card-link" href={href}>
+		{
+			cover && (
+				<Image
+					class="project-card-cover"
+					src={cover.src}
+					alt={cover.alt}
+					widths={[480, 720, 1100]}
+					sizes={lead ? '(max-width: 800px) 100vw, 1100px' : '(max-width: 800px) 100vw, 540px'}
+					formats={['avif', 'webp']}
+					loading={lead ? 'eager' : 'lazy'}
+				/>
+			)
+		}
+		<Heading class="project-card-title" style={lead ? `view-transition-name: project-${project.id}` : undefined}>
+			{title}
+		</Heading>
+	</a>
+	<p class="project-card-summary">{summary}</p>
+	<TagList items={tags} label={`${title} technologies`} />
+</article>

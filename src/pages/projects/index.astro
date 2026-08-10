@@ -1,5 +1,5 @@
 ---
-import TagList from '../../components/TagList.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
 import Base from '../../layouts/Base.astro';
 import { profile } from '../../data/profile';
 import { getPublishedProjects } from '../../lib/projects';
@@ -15,16 +15,8 @@ const description = `Case studies from ${profile.name}, a ${profile.role}.`;
 		<section class="content-section project-index" aria-labelledby="projects-title">
 			<p class="eyebrow">Selected work</p>
 			<h1 id="projects-title">Projects</h1>
-			<div class="project-list">
-				{projects.map((project) => (
-					<article class="project">
-						<h2>
-							<a href={`/projects/${project.id}/`}>{project.data.title}</a>
-						</h2>
-						<p>{project.data.summary}</p>
-						<TagList items={project.data.tags} label={`${project.data.title} technologies`} />
-					</article>
-				))}
+			<div class="project-grid">
+				{projects.map((project, index) => <ProjectCard project={project} lead={index === 0} headingLevel={2} />)}
 			</div>
 		</section>
 	</div>

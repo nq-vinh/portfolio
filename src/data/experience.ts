@@ -53,12 +53,12 @@ export const timeline = [
 		period: 'Jul 2019 - Jun 2022',
 		location: 'Vietnam',
 		highlights: [
-			'Developed Angular web applications in close collaboration with German and international ROSEN teams.',
+			'Scaffolded the shared UI component library behind every application on the platform, standardizing look, feel, and interaction patterns across teams.',
+			'Built reusable Angular components for large datasets, optimized for mobile and desktop, and resolved performance issues in big-data, map, and chart features.',
 			'Created interactive dashboards for complex sensor data, implementing real-time IoT streaming and visualization with WebSockets and RxJS.',
 			'Built Asset Explorer, visualizing customer asset networks through multiple visualization methods, and PORTAL, an external-facing platform enabling third-party applications to integrate with the platform infrastructure.',
-			'Scaffolded a shared UI component library, standardizing look and feel across all applications on the platform.',
 			'Implemented NgRx state management for complex data flows from multiple sources, and participated in integrating OAuth 2.0 authentication.',
-			'Developed reusable Angular components for large datasets, optimized for mobile and desktop, and resolved performance issues in big-data, map, and chart features.',
+			'Developed Angular web applications in close collaboration with German and international ROSEN teams.',
 		],
 	},
 	{

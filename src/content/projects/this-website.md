@@ -12,14 +12,11 @@ repo: https://github.com/nq-vinh/portfolio
 cover:
   src: ./this-website/resume-page.png
   alt: The resume page of this site, showing the experience timeline and skill groups in the site's own type and colour system.
-scope:
-  - The design token layer, both themes, and the print stylesheet that doubles as the resume PDF
-  - A build step that pins every inline script by hash and fails when the CSP drifts
-  - Build-time assertions coupling each case study's claims to its own prose
+  caption: The resume is a page, not an attachment. Its print path turns this exact document into a clean PDF, so there is no second file to keep in sync - and the timeline and skill groups behind it are typed data in the repo rather than markup to hand-edit.
 stats:
   - value: 0 KB
     label: client JavaScript
-  - value: 100 ×4
+  - value: '4 × 100'
     label: Lighthouse categories
   - value: '0.000'
     label: cumulative layout shift
@@ -32,7 +29,7 @@ hooks:
     misconception: A site with theme switching, page transitions, and responsive images is running a framework bundle.
     question: How much JavaScript is executing on this page right now?
     metric: 0 KB
-    detail: No framework, no bundle, no hydration - two hash-pinned inline snippets for the theme, everything else is HTML and CSS.
+    detail: No framework, no bundle, no hydration - three hash-pinned inline blocks, of which only the two theme snippets execute; everything else is HTML and CSS.
   - id: zero-layout-shift
     misconception: Custom web fonts always cost a flash of fallback text or a visible reflow.
     question: Did anything on this page shift while it loaded?
@@ -53,7 +50,7 @@ No hydrated component, no external script, no bundle.
 
 The only executable client code is the pre-paint theme boot in `src/layouts/Base.astro` and the toggle in `src/components/ThemeSwitch.astro`. A third inline block is declarative `type="speculationrules"` JSON, parsed as data rather than run.
 
-The exact UTF-8 byte sizes of all three inline bodies are recorded here from the compressed build: the pre-paint boot is 195 bytes, the theme switch is 1267 bytes, and the speculation rules body is 89 bytes.
+The exact UTF-8 byte sizes of all three inline bodies are recorded here from the built output: the pre-paint boot is 195 bytes, the theme switch is 1267 bytes, and the speculation rules body is 89 bytes.
 
 Everything else - the theme toggle, responsive `Picture` output, cross-document view transitions - is HTML and CSS.
 

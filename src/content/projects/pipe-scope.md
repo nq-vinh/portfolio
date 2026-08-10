@@ -11,14 +11,10 @@ date: 2026-07-21
 featured: true
 repo: https://github.com/nq-vinh/pipe-scope
 live: https://pipescope.nqvinh.tech
-scope:
-  - The token layer and both themes, with contrast ratios computed against the live theme rather than documented by hand
-  - Six shared UI primitives with typed variant APIs, including a generic data table
-  - Canvas and SVG visualization, and the 40 Hz render loop kept outside the framework's reactivity
-  - The keyboard and screen-reader architecture across every visualization
 cover:
   src: ./pipe-scope/design-system.png
   alt: PipeScope's design system page, showing colour token cards with their resolved hex values and runtime contrast ratios.
+  caption: The design system documents itself against the running app. Each swatch reads its own resolved value from the active theme and measures the contrast ratio at runtime, so the 4.5:1 figure in the stats is computed on the page rather than asserted in a spec that nobody re-checks after a token moves.
 gallery:
   - src: ./pipe-scope/components.png
     alt: The shared UI examples section of the design system page in dark theme, showing badge, button, card, icon and theme switch primitives with usage notes.
@@ -69,7 +65,7 @@ PipeScope runs on Angular 22's zoneless scheduler with `OnPush` components and s
 
 There is no zone.js in the application, so nothing patches timers or event handlers to poll the component tree for changes.
 
-The 40 Hz telemetry stream in `core/telemetry.ts` is the only RxJS surface, and `toSignal` bridges it to the stat readouts so a new frame updates exactly the templates that read it.
+The 40 Hz telemetry stream in `core/telemetry.ts` is the app's one continuous data stream, and `toSignal` bridges it to the stat readouts so a new frame updates exactly the templates that read it.
 
 The ultrasound canvas subscribes to the stream directly, fills a ring buffer, and draws oscilloscope-style traces with a persistence trail inside a `requestAnimationFrame` loop.
 
@@ -81,7 +77,7 @@ The live monitor prints its own measured draw rate in the stream-health line, so
 
 *Misconception: Real-time canvas and SVG dashboards are a lost cause for keyboards and screen readers.*
 
-The pipeline map is SVG precisely because anomaly markers deserve semantic DOM: each marker is a `role="button"` with a label like "Metal loss, high severity, at 3,240 m".
+The pipeline map is SVG precisely because anomaly markers deserve semantic DOM: each marker is a `role="button"` with a label like "Metal loss, high severity, at 3,240 m, 91 % confidence".
 
 The markers form a roving tabindex: Arrow keys walk the pipeline in distance order, Home and End jump to the ends, Enter and Space select.
 
@@ -91,7 +87,7 @@ The live stream narrates itself through a visually-hidden live region throttled 
 
 When `prefers-reduced-motion` is set, the monitor starts paused with an explanatory note instead of auto-animating.
 
-Severity is always expressed with text and marker shape as well as color, and forced-colors mode keeps borders and focus rings intact.
+Severity is always expressed with text and marker shape as well as colour, and forced-colors mode keeps borders and focus rings intact.
 
 The design-system page computes the contrast ratio of every token pair in the active theme at runtime and prints the measured values next to the swatches, which is where the 4.5:1 figure in the stats comes from.
 

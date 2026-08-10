@@ -9,14 +9,12 @@ tags:
   - CSS
 date: 2026-07-28
 featured: true
-scope:
-  - The token layer, the component set, and the procedural illustration system that draws every product image
-  - Faceted search in a Web Worker over typed-array columns, including disjunctive counts
-  - Virtualisation for both the card grid and the data table, against the document scroller
-  - A build check that fails if the virtual DOM runtime reappears in the bundle
+repo: https://github.com/nq-vinh/facet
+live: https://facet.nqvinh.tech
 cover:
   src: ./facet/catalog.png
   alt: Facet's catalog view, a filter sidebar beside a grid of product cards with generated geometric artwork.
+  caption: Ten thousand products behind eight facet groups, with every count live as you narrow. The filtering runs in a Web Worker over typed-array columns rather than an array of objects, so typing in the search box never competes with the render, and the product artwork is generated from each product's own attributes instead of fetched.
 gallery:
   - src: ./facet/data-grid.png
     alt: The catalog in table view, a sortable data grid with thumbnail, name, brand, category, price, rating, and stock columns.
@@ -42,17 +40,17 @@ hooks:
   - id: ten-thousand-products-zero-requests
     misconception: A catalog of ten thousand products needs an API behind it, or at least a JSON file to download.
     question: How many bytes of product data does this ship?
-    metric: None
+    metric: 0 bytes
     detail: Every name, brand, price, rating, colour, size and product image is derived on demand from a seeded generator, so the catalog is byte-identical on every load and the tests have something honest to assert against.
   - id: no-virtual-dom-in-the-bundle
     misconception: Choosing a framework means shipping its runtime, and shipping a framework runtime means shipping a virtual DOM.
     question: How much virtual DOM is in this bundle?
-    metric: None
+    metric: '0'
     detail: Every component compiles through Vue's Vapor mode, and a build step greps the unminified output for virtual-DOM markers so the claim fails the build rather than quietly rotting.
   - id: ten-thousand-rows-three-hundred-nodes
     misconception: Virtualised lists are a trade - you get the performance and you give up real table semantics and keyboard behaviour.
-    question: How many rows exist in the DOM when you scroll ten thousand?
-    metric: About 320
+    question: How much DOM does it take to scroll ten thousand rows?
+    metric: '~320 nodes'
     detail: The table is a real grid with aria-rowcount over the full virtual set, roving focus that survives row recycling, and Home, End, PageUp and PageDown all landing where a keyboard user would expect.
 ---
 
@@ -117,7 +115,7 @@ The table was the harder half.
 
 Windowing a table usually means abandoning `<table>` for absolutely positioned divs, which costs every row and cell semantic the platform gives you for free, so instead the rows are translated individually inside a `tbody` sized to the full virtual height.
 
-The result keeps `role="grid"` with `aria-rowcount` and `aria-rowindex` describing all ten thousand rows rather than the visible three hundred, `aria-sort` on the sortable headers, and a roving tabindex that survives row recycling.
+The result keeps `role="grid"` with `aria-rowcount` and `aria-rowindex` describing all ten thousand rows rather than the few dozen actually present, `aria-sort` on the sortable headers, and a roving tabindex that survives row recycling.
 
 Arrow keys, Home, End, PageUp, PageDown and Ctrl+Home all move focus to the cell a keyboard user expects, including when the target row does not exist in the DOM yet and has to be scrolled into existence first.
 

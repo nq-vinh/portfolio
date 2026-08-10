@@ -13,7 +13,7 @@ Editing the site means editing those files, not the markup.
   A third inline block is declarative Speculation Rules JSON (never executed) that prefetches same-origin pages on hover.
 - **A real token layer.**
   Colour, a 7-step type scale, an 8-rung fluid spacing scale and 3 radii are CSS custom properties on `:root`; nothing in the stylesheet hard-codes a size.
-  Cards, figures, galleries and the contribution-scope block are components under `src/components/`, so a case study and the homepage grid cannot drift apart.
+  Cards, figures and galleries are components under `src/components/`, so a case study and the homepage grid cannot drift apart.
 - **Seamless navigation without JavaScript:** cross-document View Transitions via the CSS `@view-transition` rule (the lead project card morphs into the case-study heading), disabled under `prefers-reduced-motion`; browsers without support get plain navigation.
 - **No render-blocking requests beyond the document.**
   All CSS is inlined at build time (`build.inlineStylesheets: 'always'`), the HTML is minified (`compressHTML`), the one webfont (Inter) is self-hosted, subset, and preloaded, and there are no third-party resources.

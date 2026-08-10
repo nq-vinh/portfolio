@@ -40,7 +40,7 @@ export const profile = {
 	now: [
 		"Senior Frontend Developer (Part-time) @ Web'n'sale.",
 		'M.Sc. Computer Science @ TU Darmstadt.',
-		'Darmstadt, Germany - open to senior frontend roles in the Rhein-Main area or remote.',
+		'Darmstadt, Germany.',
 	],
 	socialLinks: [
 		{ label: 'GitHub', href: 'https://github.com/nq-vinh', icon: 'github' },

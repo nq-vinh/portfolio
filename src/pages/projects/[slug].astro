@@ -1,8 +1,6 @@
 ---
 import { render, type CollectionEntry } from 'astro:content';
-import Figure from '../../components/Figure.astro';
 import Gallery from '../../components/Gallery.astro';
-import ScopeList from '../../components/ScopeList.astro';
 import TagList from '../../components/TagList.astro';
 import Base from '../../layouts/Base.astro';
 import { personId, profile } from '../../data/profile';
@@ -44,6 +42,11 @@ if (staleMisconceptions.length > 0) {
 	throw new Error(`Case-study body of ${entry.id} drifted from hook misconceptions: ${staleMisconceptions.join(', ')}`);
 }
 
+// The cover leads the gallery rather than standing alone under the header: as a
+// lone uncaptioned figure it explained nothing, and inside the gallery it gets
+// the same caption treatment as every other screen.
+const gallery = [...(entry.data.cover ? [entry.data.cover] : []), ...entry.data.gallery];
+
 const title = `${entry.data.metaTitle ?? entry.data.title} · ${profile.name}`;
 const articleSchema = {
 	'@context': 'https://schema.org',
@@ -80,14 +83,6 @@ const articleSchema = {
 		</header>
 
 		{
-			entry.data.cover && (
-				<Figure src={entry.data.cover.src} alt={entry.data.cover.alt} wide loading="eager" />
-			)
-		}
-
-		<ScopeList items={entry.data.scope} label="What I owned" />
-
-		{
 			entry.data.stats.length > 0 && (
 				<ul class="stat-list" aria-label="Key numbers">
 					{entry.data.stats.map((stat) => (
@@ -100,7 +95,7 @@ const articleSchema = {
 			)
 		}
 
-		<Gallery items={entry.data.gallery} label={`${entry.data.title} screens`} />
+		<Gallery items={gallery} label={`${entry.data.title} screens`} />
 
 		<article class="case-study">
 			<Content />

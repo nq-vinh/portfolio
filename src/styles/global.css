@@ -455,6 +455,13 @@ ul {
 	list-style: none;
 }
 
+/* The key numbers follow the case-study header directly now that the lead image
+   sits in the gallery, so they drop their own top margin and read as part of the
+   intro rather than floating between two blocks. */
+.case-study-header + .stat-list {
+	margin-block-start: 0;
+}
+
 .stat-list li {
 	min-width: 0;
 	padding: var(--space-3);
@@ -634,30 +641,6 @@ ul {
 	display: grid;
 	gap: var(--space-7);
 	margin-block: var(--space-7);
-}
-
-/* What I owned. The rules span the container while the text stays at measure,
-   so the band reads as page furniture rather than a boxed aside. It carries no
-   visible label - the list is named for assistive tech instead, because a third
-   uppercase mono heading under the eyebrow and the title added weight without
-   adding information. */
-.scope-list {
-	margin-block: var(--space-6) 0;
-	padding-block: var(--space-5);
-	padding-inline: var(--space-4) 0;
-	border-block: 1px solid var(--color-border);
-}
-
-.scope-list li {
-	max-width: var(--measure);
-}
-
-.scope-list li::marker {
-	color: var(--color-accent);
-}
-
-.scope-list li + li {
-	margin-block-start: var(--space-2);
 }
 
 .project-grid {
@@ -896,7 +879,6 @@ ul {
 	.case-study blockquote,
 	.case-study pre,
 	.case-study-footer,
-	.scope-list,
 	.tag,
 	.theme-toggle,
 	.portrait img {
@@ -1011,8 +993,7 @@ ul {
 		widows: 3;
 	}
 
-	.stat-list li,
-	.scope-list li {
+	.stat-list li {
 		break-inside: avoid;
 	}
 
@@ -1026,13 +1007,5 @@ ul {
 	.case-study pre {
 		background: #fff !important;
 		border-color: #000;
-	}
-
-	.scope-list {
-		border-color: #000;
-	}
-
-	.scope-list li::marker {
-		color: #000;
 	}
 }

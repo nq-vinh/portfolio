@@ -13,8 +13,14 @@ const { items, label = 'Screens' } = Astro.props;
 {
 	items.length > 0 && (
 		<section class="gallery" aria-label={label}>
-			{items.map((item) => (
-				<Figure src={item.src} alt={item.alt} caption={item.caption} wide />
+			{items.map((item, index) => (
+				<Figure
+					src={item.src}
+					alt={item.alt}
+					caption={item.caption}
+					wide
+					loading={index === 0 ? 'eager' : 'lazy'}
+				/>
 			))}
 		</section>
 	)

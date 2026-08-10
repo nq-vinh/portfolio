@@ -18,20 +18,16 @@ const projects = defineCollection({
 			live: z.string().url().optional(),
 
 			/**
-			 * What I personally owned, rendered as a band under the case-study hero.
-			 * There is deliberately no role or timeframe field: every project here is
-			 * solo, and the date is already carried by `date`.
-			 */
-			scope: z.array(z.string()).default([]),
-
-			/**
-			 * Lead image for the card, the case-study hero, and the per-page OG card.
+			 * Lead image for the card, the per-page OG card, and the first gallery
+			 * figure on the case study - so it carries a caption like every other
+			 * figure does.
 			 * Optional only until every project has one; tighten to required after that.
 			 */
 			cover: z
 				.object({
 					src: image(),
 					alt: z.string(),
+					caption: z.string(),
 				})
 				.optional(),
 			gallery: z

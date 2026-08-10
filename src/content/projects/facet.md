@@ -9,8 +9,6 @@ tags:
   - CSS
 date: 2026-07-28
 featured: true
-role: Sole designer and engineer
-timeframe: July 2026
 scope:
   - The token layer, the component set, and the procedural illustration system that draws every product image
   - Faceted search in a Web Worker over typed-array columns, including disjunctive counts

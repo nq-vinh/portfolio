@@ -5,17 +5,6 @@ export interface SkillGroup {
 
 export const skillGroups = [
 	{
-		label: 'Design engineering',
-		skills: [
-			'Design tokens & theming',
-			'Shared component libraries',
-			'Component API design (variants, states, slots)',
-			'Design system documentation',
-			'Accessibility (WCAG AA, axe, keyboard & screen reader)',
-			'Web performance (Core Web Vitals, Lighthouse)',
-		],
-	},
-	{
 		label: 'Frontend development',
 		skills: [
 			'TypeScript/JavaScript',
@@ -26,6 +15,8 @@ export const skillGroups = [
 			'Astro',
 			'RxJS',
 			'NgRx (Store & signalStore)',
+			'Accessibility (WCAG AA, axe, keyboard & screen reader)',
+			'Web performance (Core Web Vitals, Lighthouse)',
 		],
 	},
 	{

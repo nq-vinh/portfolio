@@ -9,8 +9,6 @@ tags:
 date: 2026-07-21
 featured: false
 repo: https://github.com/nq-vinh/portfolio
-role: Sole designer and engineer
-timeframe: Ongoing since 2026
 cover:
   src: ./this-website/resume-page.png
   alt: The resume page of this site, showing the experience timeline and skill groups in the site's own type and colour system.

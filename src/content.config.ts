@@ -17,9 +17,11 @@ const projects = defineCollection({
 			repo: z.string().url().optional(),
 			live: z.string().url().optional(),
 
-			/** Contribution scope, rendered directly under the case-study title. */
-			role: z.string().optional(),
-			timeframe: z.string().optional(),
+			/**
+			 * What I personally owned, rendered as a band under the case-study hero.
+			 * There is deliberately no role or timeframe field: every project here is
+			 * solo, and the date is already carried by `date`.
+			 */
 			scope: z.array(z.string()).default([]),
 
 			/**

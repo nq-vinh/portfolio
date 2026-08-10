@@ -2,7 +2,7 @@
 import { render, type CollectionEntry } from 'astro:content';
 import Figure from '../../components/Figure.astro';
 import Gallery from '../../components/Gallery.astro';
-import MetaBlock from '../../components/MetaBlock.astro';
+import ScopeList from '../../components/ScopeList.astro';
 import TagList from '../../components/TagList.astro';
 import Base from '../../layouts/Base.astro';
 import { personId, profile } from '../../data/profile';
@@ -85,12 +85,7 @@ const articleSchema = {
 			)
 		}
 
-		<MetaBlock
-			role={entry.data.role}
-			timeframe={entry.data.timeframe}
-			scope={entry.data.scope}
-			stack={entry.data.tags}
-		/>
+		<ScopeList items={entry.data.scope} label="What I owned" />
 
 		{
 			entry.data.stats.length > 0 && (

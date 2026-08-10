@@ -1,18 +1,16 @@
 ---
 title: PipeScope
-metaTitle: PipeScope - a design system behind a zoneless Angular 22 dashboard
-summary: A documented token system and six shared UI primitives, carrying a dashboard that renders a 40 Hz sensor stream on canvas and stays keyboard-operable throughout.
+metaTitle: PipeScope - a zoneless Angular 22 dashboard
+summary: An Angular 22 inspection dashboard that renders a 40 Hz sensor stream without zone.js and keeps every visualization keyboard-accessible.
 tags:
   - Angular
   - TypeScript
-  - Design tokens
+  - RxJS
   - Canvas
 date: 2026-07-21
 featured: true
 repo: https://github.com/nq-vinh/pipe-scope
 live: https://pipescope.nqvinh.tech
-role: Sole designer and engineer
-timeframe: July 2026
 scope:
   - The token layer and both themes, with contrast ratios computed against the live theme rather than documented by hand
   - Six shared UI primitives with typed variant APIs, including a generic data table

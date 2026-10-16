@@ -34,9 +34,9 @@ export const profile = {
 	tagline:
 		"I build frontend interfaces where performance, accessibility, and the browser's fundamentals do the heavy lifting.",
 	introduction:
-		"Six years of experience across Angular, Vue, and TypeScript. I've built real-time dashboards for industrial pipeline inspection, high-traffic e-commerce storefronts, and I care about the last 10%: performance budgets, accessibility. Currently pursuing an M.Sc. in Computer Science at TU Darmstadt.",
+		"Senior frontend engineer with 6+ years building customer-facing web applications across React, Angular, and Vue. Pure CSS and design-system work, from a shared UI component library to pixel-parity storefront rebuilds. I build frontend interfaces where performance, accessibility, and the browser's fundamentals do the heavy lifting. Completing an M.Sc. in Computer Science at TU Darmstadt.",
 	metaDescription:
-		'Senior frontend engineer in Darmstadt, Germany. Six years building Angular, Vue, and TypeScript applications - from real-time IoT dashboards to large-scale e-commerce storefronts.',
+		'Senior frontend engineer in Darmstadt, Germany. Six years building React, Angular, and Vue applications - from a shared UI component library and real-time dashboards to high-traffic e-commerce storefronts.',
 	now: [
 		"Senior Frontend Developer (Part-time) @ Web'n'sale.",
 		'M.Sc. Computer Science @ TU Darmstadt.',

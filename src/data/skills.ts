@@ -8,6 +8,7 @@ export const skillGroups = [
 		label: 'Frontend development',
 		skills: [
 			'React.js',
+			'React Compiler',
 			'TypeScript',
 			'JavaScript',
 			'HTML',
